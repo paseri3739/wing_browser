@@ -1,4 +1,4 @@
-package com.example.wing_browser
+package com.example.webview
 
 import io.flutter.embedding.android.FlutterActivity
 

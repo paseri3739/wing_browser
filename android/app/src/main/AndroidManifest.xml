@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.wing_browser">
+    package="com.example.webview">
    <application
-        android:label="wing_browser"
+        android:label="webview"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
