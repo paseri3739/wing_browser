@@ -58,8 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
-        title: Text("Wing Browser"),
+        title: const Text("Wing Browser"),
         actions: [
           IconButton(
               onPressed: () async{
@@ -75,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Icons.arrow_back
               )
           ),
+
           IconButton(
               onPressed: () async{
                 if (await _webViewController.canGoForward()) {
@@ -89,24 +91,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   Icons.arrow_forward
               )
           ),
+
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => _webViewController.reload(),
           ),
-        ],
+
+        ], //actions
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.android),
-              label: "ボタン1"
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.android),
-              label: "ボタン2"
-          ),
-        ],
+
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.blue,
+        child: FloatingActionButton( //childを持たないと実態が現れない。
+          onPressed: () {
+
+          },
+        child: Icon(Icons.add),
+        ),
       ),
 
       body: Center(
