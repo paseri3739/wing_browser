@@ -100,19 +100,22 @@ class _MyHomePageState extends State<MyHomePage> {
         ], //actions
       ),
 
-      floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add), onPressed: () {},),
+        child: const Icon(Icons.add),
+        onPressed: () {},
+      ),
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 4.0,
-        child: new Row(
+        child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            IconButton(icon: Icon(Icons.menu), onPressed: () {},),
-            IconButton(icon: Icon(Icons.search), onPressed: () {},),
+            IconButton(icon: const Icon(Icons.menu),
+              onPressed: () {},),
+            IconButton(icon: const Icon(Icons.arrow_forward),
+              onPressed: () {},),
           ],
         ),
       ),
