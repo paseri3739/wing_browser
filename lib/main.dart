@@ -62,43 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
       appBar: AppBar(
         title: const Text("Wing Browser"),
-        actions: [
-          IconButton(
-              onPressed: () async{
-                if (await _webViewController.canGoBack()) {
-                  _webViewController.goBack();
-                }else{
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("履歴がありません"))
-                  );
-                }
-              },
-              icon: const Icon(
-                  Icons.arrow_back
-              )
-          ),
-
-          IconButton(
-              onPressed: () async{
-                if (await _webViewController.canGoForward()) {
-                  _webViewController.goForward();
-                }else{
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("履歴がありません"))
-                  );
-                }
-              },
-              icon: const Icon(
-                  Icons.arrow_forward
-              )
-          ),
-
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => _webViewController.reload(),
-          ),
-
-        ], //actions
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -123,5 +86,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-

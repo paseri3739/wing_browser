@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart' as main;
 
 class Bottoms extends StatelessWidget {
   const Bottoms({Key? key,}) : super(key: key);
