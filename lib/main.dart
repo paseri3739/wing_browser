@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import 'bottom.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, //do not show float button when keyboard appear
 
       appBar: AppBar(
         title: const Text("Wing Browser"),
@@ -105,20 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
         onPressed: () {},
       ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 4.0,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IconButton(icon: const Icon(Icons.menu),
-              onPressed: () {},),
-            IconButton(icon: const Icon(Icons.arrow_forward),
-              onPressed: () {},),
-          ],
-        ),
-      ),
+      bottomNavigationBar: const Bottoms(),
 
       body: Center(
         child: WebView(
@@ -135,3 +123,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
