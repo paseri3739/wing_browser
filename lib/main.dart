@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'bottom.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,11 +14,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Wing Browser',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Wing Browser'),
     );
   }
 }
@@ -36,12 +34,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  late WebViewController _webViewController;
-  late WebViewPlatformController _webViewPlatformController;
-
-  Future<String?> currentUrl() {
-    return _webViewPlatformController.currentUrl();
-  }
+  late WebViewController webviewController;
+  double progress = 0;
+  bool loading = true;
 
   @override
   void initState() {
@@ -62,6 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
       appBar: AppBar(
         title: const Text("Wing Browser"),
+        bottom: PreferredSize(
+                // ignore: prefer_const_constructors
+                      preferredSize: const Size.fromHeight(10),
+                      child: LinearProgressIndicator(
+                        value: progress,
+                        backgroundColor: Colors.black12,
+                        color: Colors.red,
+                      )
+                )
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -69,19 +73,79 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
         onPressed: () {},
       ),
-      bottomNavigationBar: const Bottoms(),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 4.0,
+        child: Container(
+          height: 60,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(icon: const Icon(Icons.menu),
+                    onPressed: () {},),
+                  IconButton(
+                    icon: const Icon(Icons.refresh),
+                    onPressed: () => webviewController.reload(),
+                  ),
+                ],
+              ), //left_side
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(
+                      onPressed: () async{
+                        if (await webviewController.canGoBack()) {
+                          webviewController.goBack();
+                        }else{
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("履歴がありません"))
+                          );
+                        }
+                      },
+                      icon: const Icon(
+                          Icons.arrow_back
+                      )
+                  ),
+                  IconButton(
+                      onPressed: () async{
+                        if (await webviewController.canGoForward()) {
+                          webviewController.goForward();
+                        }else{
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("履歴がありません"))
+                          );
+                        }
+                      },
+                      icon: const Icon(
+                          Icons.arrow_forward
+                      )
+                  ),
+                ],
+              ), //right_side
+            ],
+          ),
+        ),
+      ),
 
-      body: Center(
-        child: WebView(
+      body: WebView(
           initialUrl: "https://www.google.com" ,
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController controller) {
             // We are getting an instance of the controller in the callback
             // So we take it assign it our late variable value
             // コレがないとcontrollerが機能しない。
-            _webViewController = controller ;
+            webviewController = controller ;
           },
-        ),
+          onProgress: (progress)  =>
+              setState( () => this.progress = progress / 100 ),
+          onPageStarted: (finish) =>
+              setState( () => loading = true ),
+          onPageFinished: (finish) =>
+              setState( () => loading = false ),
       ),
     );
   }
