@@ -57,15 +57,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
       appBar: AppBar(
         title: const Text("Wing Browser"),
-        bottom: PreferredSize(
-                // ignore: prefer_const_constructors
-                      preferredSize: const Size.fromHeight(10),
-                      child: LinearProgressIndicator(
-                        value: progress,
-                        backgroundColor: Colors.black12,
-                        color: Colors.red,
-                      )
-                )
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -131,21 +122,35 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
 
-      body: WebView(
-          initialUrl: "https://www.google.com" ,
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (WebViewController controller) {
-            // We are getting an instance of the controller in the callback
-            // So we take it assign it our late variable value
-            // コレがないとcontrollerが機能しない。
-            webviewController = controller ;
-          },
-          onProgress: (progress)  =>
-              setState( () => this.progress = progress / 100 ),
-          onPageStarted: (finish) =>
-              setState( () => loading = true ),
-          onPageFinished: (finish) =>
-              setState( () => loading = false ),
+      body: Column(
+        children: [
+          loading == true ? SizedBox( //三項演算子
+            height: 5,
+            child: LinearProgressIndicator(
+              value: progress,
+              backgroundColor: Colors.black12,
+              color: Colors.red,
+            ),
+          ): SizedBox(),
+          Expanded(
+            child: WebView(
+                initialUrl: "https://www.google.com" ,
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (WebViewController controller) {
+                  // We are getting an instance of the controller in the callback
+                  // So we take it assign it our late variable value
+                  // コレがないとcontrollerが機能しない。
+                  webviewController = controller ;
+                },
+                onProgress: (progress)  =>
+                    setState( () => this.progress = progress / 100 ),
+                onPageStarted: (finish) =>
+                    setState( () => loading = true ),
+                onPageFinished: (finish) =>
+                    setState( () => loading = false ),
+            ),
+          ),
+        ],
       ),
     );
   }
