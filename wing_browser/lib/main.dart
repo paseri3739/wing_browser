@@ -12,12 +12,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Hello"), backgroundColor: Colors.blue),
-      body: const HomePage(),
-      bottomNavigationBar: const Bottoms(),
-      floatingActionButton: const SearchButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        appBar:
+            AppBar(title: const Text("Hello"), backgroundColor: Colors.blue),
+        body: const HomePage(),
+        bottomNavigationBar: const Bottoms(),
+        floatingActionButton: const SearchButton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      ),
     );
   }
 }
