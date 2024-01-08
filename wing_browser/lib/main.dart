@@ -12,20 +12,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       top: true,
       bottom: false,
       child: Scaffold(
+        // Hide Floating button when keyboard appeared
         resizeToAvoidBottomInset: false,
-        appBar:
-            AppBar(title: const Text("Tab Bar"), backgroundColor: Colors.blue),
-        body: const Column(children: [UrlField(), Expanded(child: HomePage())]),
-        bottomNavigationBar: const Bottoms(),
-        floatingActionButton: const SearchButton(),
+        appBar: AppBarComponent(),
+        body: Column(children: [UrlField(), Expanded(child: HomePage())]),
+        bottomNavigationBar: Bottoms(),
+        floatingActionButton: SearchButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }
+}
+
+class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
+  const AppBarComponent({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(title: const Text("Tab Bar"), backgroundColor: Colors.blue);
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class UrlField extends StatelessWidget {
