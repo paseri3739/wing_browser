@@ -16,14 +16,37 @@ class MyApp extends StatelessWidget {
       top: true,
       bottom: false,
       child: Scaffold(
-        appBar:
-            AppBar(title: const Text("Hello"), backgroundColor: Colors.blue),
+        appBar: AppBar(title: const UrlField(), backgroundColor: Colors.blue),
         body: const HomePage(),
         bottomNavigationBar: const Bottoms(),
         floatingActionButton: const SearchButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
+  }
+}
+
+class UrlField extends StatelessWidget {
+  const UrlField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 40.0,
+        child: TextField(
+          onSubmitted: (string) {},
+          textInputAction: TextInputAction.go,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.all(10.0),
+            filled: true,
+            fillColor: Colors.white,
+            hintText: "Search For ...",
+            hintStyle: TextStyle(color: Colors.black54, fontSize: 16.0),
+          ),
+          style: const TextStyle(color: Colors.black, fontSize: 16.0),
+        ));
   }
 }
 
@@ -56,12 +79,12 @@ class Bottoms extends StatelessWidget {
           children: <Widget>[
             IconButton(
               tooltip: 'Open navigation menu',
-              icon: const Icon(Icons.menu),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {},
             ),
             IconButton(
               tooltip: 'Search',
-              icon: const Icon(Icons.search),
+              icon: const Icon(Icons.arrow_forward),
               onPressed: () {},
             ),
             IconButton(
