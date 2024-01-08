@@ -16,8 +16,10 @@ class MyApp extends StatelessWidget {
       top: true,
       bottom: false,
       child: Scaffold(
-        appBar: AppBar(title: const UrlField(), backgroundColor: Colors.blue),
-        body: const HomePage(),
+        resizeToAvoidBottomInset: false,
+        appBar:
+            AppBar(title: const Text("Tab Bar"), backgroundColor: Colors.blue),
+        body: const Column(children: [UrlField(), Expanded(child: HomePage())]),
         bottomNavigationBar: const Bottoms(),
         floatingActionButton: const SearchButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -35,6 +37,7 @@ class UrlField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         height: 40.0,
+        width: 400,
         child: TextField(
           onSubmitted: (string) {},
           textInputAction: TextInputAction.go,
