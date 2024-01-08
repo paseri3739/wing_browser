@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       top: true,
+      bottom: false,
       child: Scaffold(
         appBar:
             AppBar(title: const Text("Hello"), backgroundColor: Colors.blue),
