@@ -88,7 +88,7 @@ class Bottoms extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 90,
+      height: 70,
       child: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         color: Colors.white70,
