@@ -1,4 +1,5 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive",
-    "cmake.sourceDirectory": "/Users/masato/Documents/Wing_Browser/linux"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "cmake.sourceDirectory": "/Users/masato/Documents/Wing_Browser/linux",
+    "cSpell.words": ["inappwebview"]
 }
