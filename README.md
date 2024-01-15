@@ -15,4 +15,4 @@ Flutter project to re-implement the Smooz browser application that previously ex
 
 ## Image
 
-![beta](assets/Beta.png)
+<img src="assets/Beta.png" height="500">
