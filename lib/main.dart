@@ -6,6 +6,7 @@ import 'url_field.dart';
 import 'web_view_home_page.dart';
 
 void main(List<String> args) {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MaterialApp(
     home: MyApp(),
   ));
