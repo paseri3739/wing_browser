@@ -1,6 +1,11 @@
 # wing_browser
 
-Flutter project to re-implement the Smooz browser application that previously existed in Japan.
+Flutter project to re-implement the Smooz browser application that previously existed in Japan. The name "WingBrowser" implies that it is made in Flutter and that it offers a light browsing experience.
+
+<figure>
+  <img src="assets/logo.png" height="200">
+  <figcaption>The WingBrowser Logo</figcaption>
+</figure>
 
 ## Features
 
