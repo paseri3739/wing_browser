@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'bottom_app_bar.dart';
 import 'browser_app_bar_component.dart';
@@ -7,13 +8,26 @@ import 'web_view_home_page.dart';
 
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MaterialApp(
-    home: MyApp(),
+  runApp(const ProviderScope(
+    child: MaterialApp(
+      home: MyApp(),
+    ),
   ));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const HomePage();
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

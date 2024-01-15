@@ -7,20 +7,45 @@ class UrlField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 40.0,
-        width: 400,
-        child: TextField(
-          onSubmitted: (string) {},
-          textInputAction: TextInputAction.go,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.all(10.0),
-            filled: true,
-            fillColor: Colors.white,
-            hintText: "Search For ...",
-            hintStyle: TextStyle(color: Colors.black54, fontSize: 16.0),
+    return Row(
+      children: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.lock), // 鍵マークのアイコン
+          onPressed: () {
+            // 鍵マークのボタンが押された時の処理
+          },
+        ),
+        Expanded(
+          child: SizedBox(
+            height: 40.0,
+            child: TextField(
+              onSubmitted: (string) {
+                // ユーザーが入力を完了して送信ボタンを押した時の処理
+              },
+              textInputAction: TextInputAction.go,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(10.0),
+                filled: true,
+                fillColor: Colors.grey[300], // テキストフィールドをグレーに設定
+                hintText: "Search For ...",
+                hintStyle:
+                    const TextStyle(color: Colors.black54, fontSize: 16.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  borderSide: BorderSide.none, // 枠線を非表示に設定
+                ),
+              ),
+              style: const TextStyle(color: Colors.black, fontSize: 16.0),
+            ),
           ),
-          style: const TextStyle(color: Colors.black, fontSize: 16.0),
-        ));
+        ),
+        IconButton(
+          icon: const Icon(Icons.refresh), // 更新マークのアイコン
+          onPressed: () {
+            // 更新マークのボタンが押された時の処理
+          },
+        ),
+      ],
+    );
   }
 }

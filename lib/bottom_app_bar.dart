@@ -6,7 +6,7 @@ class BrowserBottomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 90,
+      height: 80,
       child: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         color: Colors.white70,
@@ -23,6 +23,7 @@ class BrowserBottomAppBar extends StatelessWidget {
               icon: const Icon(Icons.arrow_forward),
               onPressed: () {},
             ),
+            const Spacer(),
             IconButton(
               tooltip: 'Favorite',
               icon: const Icon(Icons.star),

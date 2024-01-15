@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class WebViewHomePage extends StatefulWidget {
   const WebViewHomePage({super.key});
@@ -9,13 +10,19 @@ class WebViewHomePage extends StatefulWidget {
   State<WebViewHomePage> createState() => _WebViewHomePageState();
 }
 
+final initialUrlProvider =
+    StateProvider<String>((ref) => "https://www.google.com");
+final pullToRefreshControllerProvider =
+    StateProvider.autoDispose<PullToRefreshController?>((ref) => null);
+final webViewControllerProvider = StateProvider((ref) => null);
+
 class _WebViewHomePageState extends State<WebViewHomePage> {
   final GlobalKey webViewKey = GlobalKey();
 
-  InAppWebViewController? webViewController;
+  late InAppWebViewController webViewController;
   InAppWebViewSettings settings =
       InAppWebViewSettings(isInspectable: kDebugMode);
-  PullToRefreshController? pullToRefreshController;
+  late PullToRefreshController pullToRefreshController;
   PullToRefreshSettings pullToRefreshSettings = PullToRefreshSettings(
     color: Colors.blue,
   );
@@ -26,20 +33,17 @@ class _WebViewHomePageState extends State<WebViewHomePage> {
   void initState() {
     super.initState();
 
-    pullToRefreshController = kIsWeb
-        ? null
-        : PullToRefreshController(
-            settings: pullToRefreshSettings,
-            onRefresh: () async {
-              if (defaultTargetPlatform == TargetPlatform.android) {
-                webViewController?.reload();
-              } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-                webViewController?.loadUrl(
-                    urlRequest:
-                        URLRequest(url: await webViewController?.getUrl()));
-              }
-            },
-          );
+    pullToRefreshController = PullToRefreshController(
+      settings: pullToRefreshSettings,
+      onRefresh: () async {
+        if (defaultTargetPlatform == TargetPlatform.android) {
+          webViewController.reload();
+        } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+          webViewController.loadUrl(
+              urlRequest: URLRequest(url: await webViewController.getUrl()));
+        }
+      },
+    );
   }
 
   @override
@@ -53,14 +57,14 @@ class _WebViewHomePageState extends State<WebViewHomePage> {
         webViewController = controller;
       },
       onLoadStop: (controller, url) {
-        pullToRefreshController?.endRefreshing();
+        pullToRefreshController.endRefreshing();
       },
       onReceivedError: (controller, request, error) {
-        pullToRefreshController?.endRefreshing();
+        pullToRefreshController.endRefreshing();
       },
       onProgressChanged: (controller, progress) {
         if (progress == 100) {
-          pullToRefreshController?.endRefreshing();
+          pullToRefreshController.endRefreshing();
         }
       },
     );
