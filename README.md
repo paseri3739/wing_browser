@@ -7,7 +7,7 @@ Flutter project to re-implement the Smooz browser application that previously ex
   <figcaption>The WingBrowser Logo</figcaption>
 </figure>
 
-## Features
+## Features to be implemented
 
 - Pull to refresh
 - Reorderable UI components
