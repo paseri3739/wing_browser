@@ -1,51 +1,81 @@
 import 'package:flutter/material.dart';
 
 class UrlField extends StatelessWidget {
+  final double height; // 高さを指定するプロパティ
+
   const UrlField({
     super.key,
+    this.height = 40.0, // デフォルトの高さ
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.lock), // 鍵マークのアイコン
-          onPressed: () {
-            // 鍵マークのボタンが押された時の処理
-          },
-        ),
-        Expanded(
-          child: SizedBox(
-            height: 40.0,
-            child: TextField(
-              onSubmitted: (string) {
-                // ユーザーが入力を完了して送信ボタンを押した時の処理
-              },
-              textInputAction: TextInputAction.go,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(10.0),
-                filled: true,
-                fillColor: Colors.grey[300], // テキストフィールドをグレーに設定
-                hintText: "Search For ...",
-                hintStyle:
-                    const TextStyle(color: Colors.black54, fontSize: 16.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                  borderSide: BorderSide.none, // 枠線を非表示に設定
+    return SizedBox(
+      height: height, // ここでウィジェットの高さを設定してすべてに適用する
+      child: Row(
+        children: <Widget>[
+          SquareIconButton(
+            height: height,
+            icon: Icons.lock,
+            color: Colors.green,
+          ),
+          Expanded(
+            child: SizedBox(
+              height: height,
+              child: TextField(
+                textAlign: TextAlign.center,
+                onSubmitted: (string) {},
+                textInputAction: TextInputAction.go,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.all(10.0),
+                  filled: true,
+                  fillColor: Colors.grey[300],
+                  hintText: "Search For ...",
+                  hintStyle:
+                      const TextStyle(color: Colors.black54, fontSize: 16.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3.0),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
+                style: const TextStyle(color: Colors.black, fontSize: 16.0),
               ),
-              style: const TextStyle(color: Colors.black, fontSize: 16.0),
             ),
           ),
-        ),
-        IconButton(
-          icon: const Icon(Icons.refresh), // 更新マークのアイコン
-          onPressed: () {
-            // 更新マークのボタンが押された時の処理
-          },
-        ),
-      ],
+          SquareIconButton(
+            height: height,
+            icon: Icons.refresh,
+            color: Colors.black,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SquareIconButton extends StatelessWidget {
+  const SquareIconButton({
+    super.key,
+    required this.height,
+    required this.icon,
+    required this.color,
+  });
+
+  final double height;
+  final IconData icon;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      width: height, // IconButtonが正方形になるように幅も高さに合わせる
+      child: IconButton(
+        icon: Icon(icon, color: color),
+        onPressed: () {},
+        padding: EdgeInsets.zero, // パディングを0に設定する
+        constraints: const BoxConstraints(), // ボタンの制約を追加してサイズを調整する
+      ),
     );
   }
 }

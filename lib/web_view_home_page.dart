@@ -17,8 +17,6 @@ final pullToRefreshControllerProvider =
 final webViewControllerProvider = StateProvider((ref) => null);
 
 class _WebViewHomePageState extends State<WebViewHomePage> {
-  final GlobalKey webViewKey = GlobalKey();
-
   late InAppWebViewController webViewController;
   InAppWebViewSettings settings =
       InAppWebViewSettings(isInspectable: kDebugMode);
@@ -26,6 +24,7 @@ class _WebViewHomePageState extends State<WebViewHomePage> {
   PullToRefreshSettings pullToRefreshSettings = PullToRefreshSettings(
     color: Colors.blue,
   );
+  double progress = 0.0;
   bool pullToRefreshEnabled = true;
   String initialUrl = "https://www.google.com";
 
@@ -49,7 +48,6 @@ class _WebViewHomePageState extends State<WebViewHomePage> {
   @override
   Widget build(BuildContext context) {
     return InAppWebView(
-      key: webViewKey,
       initialUrlRequest: URLRequest(url: WebUri(initialUrl)),
       initialSettings: settings,
       pullToRefreshController: pullToRefreshController,

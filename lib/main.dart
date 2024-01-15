@@ -38,8 +38,12 @@ class HomePage extends StatelessWidget {
         // Hide Floating button when keyboard appeared
         resizeToAvoidBottomInset: false,
         appBar: BrowserAppBarComponent(),
-        body:
-            Column(children: [UrlField(), Expanded(child: WebViewHomePage())]),
+        body: Column(children: [
+          UrlField(
+            height: 30,
+          ),
+          Expanded(child: WebViewHomePage())
+        ]),
         bottomNavigationBar: BrowserBottomAppBar(),
         floatingActionButton: SearchButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
