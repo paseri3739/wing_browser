@@ -27,8 +27,10 @@ class UrlField extends StatelessWidget {
                 onSubmitted: (string) {},
                 textInputAction: TextInputAction.go,
                 decoration: InputDecoration(
-                  contentPadding:
-                      const EdgeInsets.all(6.0), //マジックナンバー。縦の値に合わせて調整させたい
+                  isDense: false,
+                  contentPadding: const EdgeInsets.all(
+                    2.0,
+                  ), //マジックナンバー。縦の値に合わせて調整させたい
                   filled: true,
                   fillColor: Colors.grey[300],
                   hintText: "Search For ...",
