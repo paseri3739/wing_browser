@@ -12,3 +12,7 @@ Flutter project to re-implement the Smooz browser application that previously ex
 - Press and hold the search button and swipe left or right to preview tabs and switch between them faster.
 - Ad Blocker
 - User Script Execution
+
+## Image
+
+![beta](assets/Beta.png)
