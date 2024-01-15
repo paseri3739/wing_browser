@@ -1,16 +1,14 @@
 # wing_browser
 
-A new Flutter project.
+Flutter project to re-implement the Smooz browser application that previously existed in Japan.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Pull to refresh
+- Reorderable UI components
+- Switch tabs by swiping left or right
+- Just press the search button to open a new tab and focus on the search box
+- Swipe up on the search button to clear the tab
+- Press and hold the search button and swipe left or right to preview tabs and switch between them faster.
+- Ad Blocker
+- User Script Execution
