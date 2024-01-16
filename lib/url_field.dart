@@ -34,8 +34,8 @@ class UrlField extends StatelessWidget {
                   filled: true,
                   fillColor: Colors.grey[300],
                   hintText: "Search For ...",
-                  hintStyle:
-                      const TextStyle(color: Colors.black54, fontSize: 16.0),
+                  hintStyle: const TextStyle(
+                      color: Colors.black54, fontSize: 16.0), //これもマジックナンバー
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(3.0),
                     borderSide: BorderSide.none,
