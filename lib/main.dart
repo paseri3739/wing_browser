@@ -40,11 +40,11 @@ class HomePage extends StatelessWidget {
         appBar: BrowserAppBarComponent(),
         body: Column(children: [
           UrlField(
-            height: 30,
+            height: 30, //マジックナンバー
           ),
           Expanded(child: WebViewHomePage())
         ]),
-        bottomNavigationBar: BrowserBottomAppBar(),
+        bottomNavigationBar: BrowserBottomAppBar(height: 70),
         floatingActionButton: SearchButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),

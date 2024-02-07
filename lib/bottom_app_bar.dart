@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class BrowserBottomAppBar extends StatelessWidget {
-  const BrowserBottomAppBar({super.key});
+  final double height;
+  const BrowserBottomAppBar({super.key, required this.height});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 80,
+      height: height,
       child: BottomAppBar(
         shape: const CircularNotchedRectangle(),
-        color: Colors.white70,
+        notchMargin: 5.0,
+        color: Colors.blueGrey,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween, // 子要素を左右に分散させる
           children: <Widget>[

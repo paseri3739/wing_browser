@@ -8,10 +8,7 @@ class BrowserAppBarComponent extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: const Text("Tab Bar"),
-      backgroundColor: Colors.blue,
-    );
+    return AppBar(title: const Text("Tab Bar"), backgroundColor: Colors.blue);
   }
 
   @override
