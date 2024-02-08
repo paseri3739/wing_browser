@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'bottom_app_bar.dart';
-import 'browser_app_bar_component.dart';
-import 'url_field.dart';
-import 'web_view_home_page.dart';
+import 'ui_component/bottom_app_bar.dart';
+import 'ui_component/browser_app_bar_component.dart';
+import 'ui_component/url_field.dart';
+import 'webview_tab/web_view_home_page.dart';
 
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();

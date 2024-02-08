@@ -51,9 +51,6 @@ class _WebViewHomePageState extends State<WebViewHomePage> {
       initialUrlRequest: URLRequest(url: WebUri(initialUrl)),
       initialSettings: settings,
       pullToRefreshController: pullToRefreshController,
-      onWebViewCreated: (InAppWebViewController controller) {
-        webViewController = controller;
-      },
       onLoadStop: (controller, url) {
         pullToRefreshController.endRefreshing();
       },
