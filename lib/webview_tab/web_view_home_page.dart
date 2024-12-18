@@ -55,6 +55,7 @@ class _WebViewHomePageState extends State<WebViewHomePage> {
       onReceivedError: (controller, request, error) {
         _pullToRefreshController.endRefreshing();
       },
+      // TODO: Implement progress bar
       onProgressChanged: (controller, progress) {
         if (progress == _FINISHED) {
           _pullToRefreshController.endRefreshing();
