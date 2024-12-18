@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wing_browser/ui_component/search_button.dart';
 
 import 'ui_component/bottom_app_bar.dart';
 import 'ui_component/browser_app_bar_component.dart';
@@ -31,6 +32,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // SafeArea: avoid being hidden by the system ui
     return const SafeArea(
       top: true,
       bottom: false,
@@ -44,6 +46,7 @@ class HomePage extends StatelessWidget {
           ),
           Expanded(child: WebViewHomePage())
         ]),
+        // TODO: Responsive height
         bottomNavigationBar: BrowserBottomAppBar(height: 70),
         floatingActionButton: SearchButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wing_browser/ui_component/square_icon_button.dart';
 
 class UrlField extends StatelessWidget {
   final double height; // 高さを指定するプロパティ
@@ -34,8 +35,7 @@ class UrlField extends StatelessWidget {
                   filled: true,
                   fillColor: Colors.grey[300],
                   hintText: "Search For ...",
-                  hintStyle: const TextStyle(
-                      color: Colors.black54, fontSize: 16.0), //これもマジックナンバー
+                  hintStyle: const TextStyle(color: Colors.black54, fontSize: 16.0), //これもマジックナンバー
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(3.0),
                     borderSide: BorderSide.none,
@@ -51,33 +51,6 @@ class UrlField extends StatelessWidget {
             color: Colors.black,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class SquareIconButton extends StatelessWidget {
-  const SquareIconButton({
-    super.key,
-    required this.height,
-    required this.icon,
-    required this.color,
-  });
-
-  final double height;
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      width: height, // IconButtonが正方形になるように幅も高さに合わせる
-      child: IconButton(
-        icon: Icon(icon, color: color),
-        onPressed: () {},
-        padding: EdgeInsets.zero, // パディングを0に設定する
-        constraints: const BoxConstraints(), // ボタンの制約を追加してサイズを調整する
       ),
     );
   }
