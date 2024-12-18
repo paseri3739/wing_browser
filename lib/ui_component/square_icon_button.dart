@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class SquareIconButton extends StatelessWidget {
+  final double height;
+  final IconData icon;
+  final Color color;
+
   const SquareIconButton({
     super.key,
     required this.height,
     required this.icon,
     required this.color,
   });
-
-  final double height;
-  final IconData icon;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
