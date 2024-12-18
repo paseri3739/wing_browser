@@ -2,7 +2,5 @@
     "java.configuration.updateBuildConfiguration": "automatic",
     "cmake.sourceDirectory": "/Users/masato/Documents/Wing_Browser/linux",
     "cSpell.words": ["inappwebview"],
-    "terminal.integrated.env.osx": {
-        "JAVA_HOME": "/Applications/AndroidStudio.app/Contents/jbr/Contents/Home"
-    }
+    "dart.flutterSdkPath": ".fvm/versions/3.27.1"
 }
