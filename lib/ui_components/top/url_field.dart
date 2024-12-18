@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wing_browser/ui_component/square_icon_button.dart';
+import 'package:wing_browser/ui_components/common/square_icon_button.dart';
 
 class UrlField extends StatelessWidget {
   final double height; // 高さを指定するプロパティ
