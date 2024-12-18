@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wing_browser/ui_components/bottom/browser_popup_menu.dart';
+import 'package:wing_browser/ui_components/bottomNavigation/browser_popup_menu.dart';
 
 /// BottomAppBar for Browsing Page
 class BrowserBottomAppBar extends StatelessWidget {
