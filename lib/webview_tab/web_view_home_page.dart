@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class WebViewHomePage extends StatefulWidget {
   const WebViewHomePage({super.key});
@@ -10,36 +10,31 @@ class WebViewHomePage extends StatefulWidget {
   State<WebViewHomePage> createState() => _WebViewHomePageState();
 }
 
-final initialUrlProvider =
-    StateProvider<String>((ref) => "https://www.google.com");
-final pullToRefreshControllerProvider =
-    StateProvider.autoDispose<PullToRefreshController?>((ref) => null);
-final webViewControllerProvider = StateProvider((ref) => null);
+// final initialUrlProvider = StateProvider<String>((ref) => "https://www.google.com");
+// final pullToRefreshControllerProvider = StateProvider.autoDispose<PullToRefreshController?>((ref) => null);
+// final webViewControllerProvider = StateProvider((ref) => null);
 
 class _WebViewHomePageState extends State<WebViewHomePage> {
-  late InAppWebViewController webViewController;
-  InAppWebViewSettings settings =
-      InAppWebViewSettings(isInspectable: kDebugMode);
-  late PullToRefreshController pullToRefreshController;
-  PullToRefreshSettings pullToRefreshSettings = PullToRefreshSettings(
+  static const int _FINISHED = 100;
+  late final InAppWebViewController _webViewController;
+  final InAppWebViewSettings _settings = InAppWebViewSettings(isInspectable: kDebugMode);
+  late final PullToRefreshController _pullToRefreshController;
+  final PullToRefreshSettings _pullToRefreshSettings = PullToRefreshSettings(
     color: Colors.blue,
   );
-  double progress = 0.0;
-  bool pullToRefreshEnabled = true;
-  String initialUrl = "https://www.google.com";
+  final String _initialUrl = "https://www.google.com";
 
   @override
   void initState() {
     super.initState();
 
-    pullToRefreshController = PullToRefreshController(
-      settings: pullToRefreshSettings,
+    _pullToRefreshController = PullToRefreshController(
+      settings: _pullToRefreshSettings,
       onRefresh: () async {
         if (defaultTargetPlatform == TargetPlatform.android) {
-          webViewController.reload();
+          _webViewController.reload();
         } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-          webViewController.loadUrl(
-              urlRequest: URLRequest(url: await webViewController.getUrl()));
+          _webViewController.loadUrl(urlRequest: URLRequest(url: await _webViewController.getUrl()));
         }
       },
     );
@@ -48,18 +43,21 @@ class _WebViewHomePageState extends State<WebViewHomePage> {
   @override
   Widget build(BuildContext context) {
     return InAppWebView(
-      initialUrlRequest: URLRequest(url: WebUri(initialUrl)),
-      initialSettings: settings,
-      pullToRefreshController: pullToRefreshController,
+      initialUrlRequest: URLRequest(url: WebUri(_initialUrl)),
+      initialSettings: _settings,
+      pullToRefreshController: _pullToRefreshController,
+      onWebViewCreated: (controller) {
+        _webViewController = controller;
+      },
       onLoadStop: (controller, url) {
-        pullToRefreshController.endRefreshing();
+        _pullToRefreshController.endRefreshing();
       },
       onReceivedError: (controller, request, error) {
-        pullToRefreshController.endRefreshing();
+        _pullToRefreshController.endRefreshing();
       },
       onProgressChanged: (controller, progress) {
-        if (progress == 100) {
-          pullToRefreshController.endRefreshing();
+        if (progress == _FINISHED) {
+          _pullToRefreshController.endRefreshing();
         }
       },
     );

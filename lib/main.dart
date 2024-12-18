@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/ui_component/search_button.dart';
 
@@ -7,8 +10,13 @@ import 'ui_component/browser_app_bar_component.dart';
 import 'ui_component/url_field.dart';
 import 'webview_tab/web_view_home_page.dart';
 
-void main(List<String> args) {
+Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (Platform.isAndroid || Platform.isIOS) {
+    await InAppWebViewController.setWebContentsDebuggingEnabled(true);
+  }
+
   runApp(const ProviderScope(
     child: MaterialApp(
       home: MyApp(),
