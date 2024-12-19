@@ -1,20 +1,53 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class WebViewHomePage extends StatefulWidget {
+/// State class for WebView state management
+class WebViewState {
+  final double progress;
+  final String url;
+
+  WebViewState({this.progress = 0.0, this.url = "https://www.google.com"});
+
+  WebViewState copyWith({double? progress, String? url}) {
+    return WebViewState(
+      progress: progress ?? this.progress,
+      url: url ?? this.url,
+    );
+  }
+}
+
+/// StateNotifier to manage WebViewState
+class WebViewNotifier extends StateNotifier<WebViewState> {
+  WebViewNotifier() : super(WebViewState());
+
+  void setProgress(double progress) {
+    state = state.copyWith(progress: progress);
+  }
+
+  void setUrl(String url) {
+    state = state.copyWith(url: url);
+  }
+
+  void resetProgress() {
+    state = state.copyWith(progress: 0.0);
+  }
+}
+
+/// Provider for WebViewNotifier
+final webViewProvider = StateNotifierProvider<WebViewNotifier, WebViewState>((ref) {
+  return WebViewNotifier();
+});
+
+class WebViewHomePage extends ConsumerStatefulWidget {
   const WebViewHomePage({super.key});
 
   @override
-  State<WebViewHomePage> createState() => _WebViewHomePageState();
+  ConsumerState<WebViewHomePage> createState() => _WebViewHomePageState();
 }
 
-// final initialUrlProvider = StateProvider<String>((ref) => "https://www.google.com");
-// final pullToRefreshControllerProvider = StateProvider.autoDispose<PullToRefreshController?>((ref) => null);
-// final webViewControllerProvider = StateProvider((ref) => null);
-
-class _WebViewHomePageState extends State<WebViewHomePage> {
+class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
   static const int _FINISHED = 100;
   late final InAppWebViewController _webViewController;
   final InAppWebViewSettings _settings = InAppWebViewSettings(isInspectable: kDebugMode);
@@ -42,6 +75,8 @@ class _WebViewHomePageState extends State<WebViewHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final webViewNotifier = ref.read(webViewProvider.notifier);
+
     return InAppWebView(
       initialUrlRequest: URLRequest(url: WebUri(_initialUrl)),
       initialSettings: _settings,
@@ -51,14 +86,21 @@ class _WebViewHomePageState extends State<WebViewHomePage> {
       },
       onLoadStop: (controller, url) {
         _pullToRefreshController.endRefreshing();
+        if (url != null) {
+          webViewNotifier.setUrl(url.toString());
+        }
       },
       onReceivedError: (controller, request, error) {
         _pullToRefreshController.endRefreshing();
       },
-      // TODO: Implement progress bar
       onProgressChanged: (controller, progress) {
+        final normalizedProgress = progress / 100.0;
+        webViewNotifier.setProgress(normalizedProgress);
+
         if (progress == _FINISHED) {
           _pullToRefreshController.endRefreshing();
+          // 描画前に値がリセットされ、連動してAppBarのプログレスもリセットされる
+          webViewNotifier.resetProgress();
         }
       },
     );
