@@ -8,7 +8,7 @@ import 'package:wing_browser/ui_components/bottomNavigation/search_button.dart';
 import 'ui_components/bottomNavigation/bottom_app_bar.dart';
 import 'ui_components/topNavigation/browser_app_bar_component.dart';
 import 'ui_components/topNavigation/url_field.dart';
-import 'webview_tab/web_view_home_page.dart';
+import 'webview/web_view_home_page.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
