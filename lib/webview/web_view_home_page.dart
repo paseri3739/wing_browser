@@ -39,7 +39,8 @@ class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final webViewNotifier = ref.watch(webViewProvider.notifier);
+    // readは描画をトリガーしないため、Notifierを取得するために使用する
+    final webViewNotifier = ref.read(webViewProvider.notifier);
 
     return InAppWebView(
       initialUrlRequest: URLRequest(url: WebUri(_initialUrl)),
