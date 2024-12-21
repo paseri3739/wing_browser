@@ -48,6 +48,7 @@ class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
       pullToRefreshController: _pullToRefreshController,
       onWebViewCreated: (controller) {
         _webViewController = controller;
+        webViewNotifier.setWebViewController(controller);
       },
       onLoadStop: (controller, url) {
         _pullToRefreshController.endRefreshing();
