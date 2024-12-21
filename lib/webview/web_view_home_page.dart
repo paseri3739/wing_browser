@@ -2,43 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-/// State class for WebView state management
-class WebViewState {
-  final double progress;
-  final String url;
-
-  WebViewState({this.progress = 0.0, this.url = "https://www.google.com"});
-
-  WebViewState copyWith({double? progress, String? url}) {
-    return WebViewState(
-      progress: progress ?? this.progress,
-      url: url ?? this.url,
-    );
-  }
-}
-
-/// StateNotifier to manage WebViewState
-class WebViewNotifier extends StateNotifier<WebViewState> {
-  WebViewNotifier() : super(WebViewState());
-
-  void setProgress(double progress) {
-    state = state.copyWith(progress: progress);
-  }
-
-  void setUrl(String url) {
-    state = state.copyWith(url: url);
-  }
-
-  void resetProgress() {
-    state = state.copyWith(progress: 0.0);
-  }
-}
-
-/// Provider for WebViewNotifier
-final webViewProvider = StateNotifierProvider<WebViewNotifier, WebViewState>((ref) {
-  return WebViewNotifier();
-});
+import 'package:wing_browser/webview/state/web_view_model.dart';
 
 class WebViewHomePage extends ConsumerStatefulWidget {
   const WebViewHomePage({super.key});
@@ -75,7 +39,7 @@ class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final webViewNotifier = ref.read(webViewProvider.notifier);
+    final webViewNotifier = ref.watch(webViewProvider.notifier);
 
     return InAppWebView(
       initialUrlRequest: URLRequest(url: WebUri(_initialUrl)),
@@ -87,7 +51,7 @@ class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
       onLoadStop: (controller, url) {
         _pullToRefreshController.endRefreshing();
         if (url != null) {
-          webViewNotifier.setUrl(url.toString());
+          webViewNotifier.setUrl(WebUri(url.toString()));
         }
       },
       onReceivedError: (controller, request, error) {

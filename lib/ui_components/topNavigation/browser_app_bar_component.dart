@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wing_browser/webview/web_view_home_page.dart';
+import 'package:wing_browser/webview/state/web_view_model.dart';
 
 class BrowserAppBarComponent extends ConsumerWidget implements PreferredSizeWidget {
   const BrowserAppBarComponent({
