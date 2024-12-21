@@ -33,7 +33,11 @@ class BrowserBottomAppBar extends ConsumerWidget {
             IconButton(
               tooltip: 'Forward',
               icon: const Icon(Icons.arrow_forward),
-              onPressed: () {},
+              onPressed: () async {
+                if (await webViewController!.canGoForward()) {
+                  webViewController.goForward();
+                }
+              },
             ),
             const Spacer(),
             IconButton(
