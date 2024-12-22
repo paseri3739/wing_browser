@@ -17,6 +17,7 @@ class UrlField extends ConsumerWidget {
     final TextEditingController controller = TextEditingController();
     final WebUri? url = ref.watch(webViewProvider).url;
     final progress = ref.watch(webViewProvider).progress;
+    final InAppWebViewController? webViewController = ref.watch(webViewProvider).webViewController;
 
     // URLを反映
     if (url != null && controller.text != url.toString()) {
@@ -36,6 +37,7 @@ class UrlField extends ConsumerWidget {
                 height: height,
                 icon: lockIcon,
                 color: iconColor,
+                onPressed: () {},
               ),
               Expanded(
                 child: SizedBox(
@@ -70,6 +72,9 @@ class UrlField extends ConsumerWidget {
                 height: height,
                 icon: Icons.refresh,
                 color: Colors.black,
+                onPressed: () async {
+                  await webViewController?.reload();
+                },
               ),
             ],
           ),
