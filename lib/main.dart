@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
     // SafeArea: avoid being hidden by the system ui
     return const SafeArea(
       top: true,
-      bottom: false,
+      bottom: true,
       child: Scaffold(
         // Hide Floating button when keyboard appeared
         resizeToAvoidBottomInset: false,
