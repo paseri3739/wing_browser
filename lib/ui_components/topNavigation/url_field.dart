@@ -22,14 +22,18 @@ class UrlField extends ConsumerWidget {
       controller.text = url.toString();
     }
 
+    // アイコンを動的に設定
+    IconData lockIcon = (url?.scheme == 'https') ? Icons.lock : Icons.lock_open;
+    Color iconColor = (url?.scheme == 'https') ? Colors.green : Colors.red;
+
     return SizedBox(
       height: height, // ここでウィジェットの高さを設定してすべてに適用する
       child: Row(
         children: <Widget>[
           SquareIconButton(
             height: height,
-            icon: Icons.lock,
-            color: Colors.green,
+            icon: lockIcon,
+            color: iconColor,
           ),
           Expanded(
             child: SizedBox(
