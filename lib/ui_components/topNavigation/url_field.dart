@@ -45,9 +45,30 @@ class UrlField extends ConsumerWidget {
                   child: TextField(
                     controller: controller,
                     textAlign: TextAlign.center,
-                    onSubmitted: (string) {
-                      // URL更新処理をここに記述
-                      ref.read(webViewProvider.notifier).setUrl(WebUri(string));
+                    onSubmitted: (string) async {
+                      if (webViewController != null) {
+                        try {
+                          // 入力された文字列が有効なURLかチェック
+                          final uri = Uri.parse(string);
+                          if (uri.scheme.isEmpty) {
+                            // スキームが指定されていない場合は https を追加
+                            await webViewController.loadUrl(
+                              urlRequest: URLRequest(url: WebUri("https://$string")),
+                            );
+                          } else {
+                            await webViewController.loadUrl(
+                              urlRequest: URLRequest(url: WebUri(string)),
+                            );
+                          }
+                          // 状態を更新
+                          ref.read(webViewProvider.notifier).setUrl(WebUri(string));
+                        } catch (e) {
+                          // 無効なURLの場合のエラーハンドリング
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Invalid URL")),
+                          );
+                        }
+                      }
                     },
                     textInputAction: TextInputAction.go,
                     decoration: InputDecoration(
