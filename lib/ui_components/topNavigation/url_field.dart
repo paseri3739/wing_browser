@@ -50,18 +50,20 @@ class UrlField extends ConsumerWidget {
                         try {
                           // 入力された文字列が有効なURLかチェック
                           final uri = Uri.parse(string);
-                          if (uri.scheme.isEmpty) {
-                            // スキームが指定されていない場合は https を追加
-                            await webViewController.loadUrl(
-                              urlRequest: URLRequest(url: WebUri("https://$string")),
-                            );
-                          } else {
-                            await webViewController.loadUrl(
-                              urlRequest: URLRequest(url: WebUri(string)),
-                            );
-                          }
+
+                          // スキームが空の場合は http:// を補完
+                          // TODO: 挙動を改善する
+                          final correctedUri = uri.scheme.isEmpty
+                              ? WebUri("http://$string") // HTTP をデフォルトとする
+                              : WebUri(string);
+
+                          // URLをロード
+                          await webViewController.loadUrl(
+                            urlRequest: URLRequest(url: correctedUri),
+                          );
+
                           // 状態を更新
-                          ref.read(webViewProvider.notifier).setUrl(WebUri(string));
+                          ref.read(webViewProvider.notifier).setUrl(correctedUri);
                         } catch (e) {
                           // 無効なURLの場合のエラーハンドリング
                           ScaffoldMessenger.of(context).showSnackBar(
