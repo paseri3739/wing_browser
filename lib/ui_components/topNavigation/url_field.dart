@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/ui_components/common/square_icon_button.dart';
+import 'package:wing_browser/webview/state/web_view_model.dart';
 
-class UrlField extends StatelessWidget {
+class UrlField extends ConsumerWidget {
   final double height; // 高さを指定するプロパティ
 
   const UrlField({
@@ -10,7 +13,15 @@ class UrlField extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final TextEditingController controller = TextEditingController();
+    final WebUri? url = ref.watch(webViewProvider).url;
+
+    // URLを反映
+    if (url != null && controller.text != url.toString()) {
+      controller.text = url.toString();
+    }
+
     return SizedBox(
       height: height, // ここでウィジェットの高さを設定してすべてに適用する
       child: Row(
@@ -24,18 +35,22 @@ class UrlField extends StatelessWidget {
             child: SizedBox(
               height: height,
               child: TextField(
+                controller: controller,
                 textAlign: TextAlign.center,
-                onSubmitted: (string) {},
+                onSubmitted: (string) {
+                  // URL更新処理をここに記述
+                  ref.read(webViewProvider.notifier).setUrl(WebUri(string));
+                },
                 textInputAction: TextInputAction.go,
                 decoration: InputDecoration(
                   isDense: false,
                   contentPadding: const EdgeInsets.all(
                     2.0,
-                  ), //マジックナンバー。縦の値に合わせて調整させたい
+                  ), // マジックナンバー。縦の値に合わせて調整させたい
                   filled: true,
                   fillColor: Colors.grey[300],
                   hintText: "Search For ...",
-                  hintStyle: const TextStyle(color: Colors.black54, fontSize: 16.0), //これもマジックナンバー
+                  hintStyle: const TextStyle(color: Colors.black54, fontSize: 16.0), // これもマジックナンバー
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(3.0),
                     borderSide: BorderSide.none,
