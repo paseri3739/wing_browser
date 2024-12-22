@@ -13,7 +13,7 @@ import 'webview/web_view_home_page.dart';
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (Platform.isAndroid || Platform.isIOS) {
+  if (Platform.isAndroid) {
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
