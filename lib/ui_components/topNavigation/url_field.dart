@@ -75,9 +75,10 @@ class UrlField extends ConsumerWidget {
                     textInputAction: TextInputAction.go,
                     decoration: InputDecoration(
                       isDense: false,
-                      contentPadding: const EdgeInsets.all(
-                        2.0,
-                      ), // マジックナンバー。縦の値に合わせて調整させたい
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 0, // 縦方向のパディング
+                        horizontal: 16.0, // 横方向のパディング
+                      ), // TODO: マジックナンバー。縦の値に合わせて調整させたい
                       filled: true,
                       fillColor: Colors.grey[300],
                       hintText: "Search For ...",
