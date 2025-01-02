@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wing_browser/ui_components/bottomNavigation/search_button.dart';
+import 'package:wing_browser/ui_components/bottom_navigation/search_button.dart';
 
-import 'ui_components/bottomNavigation/bottom_app_bar.dart';
-import 'ui_components/topNavigation/browser_app_bar_component.dart';
-import 'ui_components/topNavigation/url_field.dart';
+import 'ui_components/bottom_navigation/bottom_app_bar.dart';
+import 'ui_components/top_navigation/browser_app_bar_component.dart';
+import 'ui_components/top_navigation/url_field.dart';
 import 'webview/web_view_home_page.dart';
 
 Future<void> main(List<String> args) async {
