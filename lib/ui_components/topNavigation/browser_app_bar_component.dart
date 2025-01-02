@@ -8,7 +8,9 @@ class BrowserAppBarComponent extends ConsumerWidget implements PreferredSizeWidg
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return AppBar(title: const Text("Tab Bar"), backgroundColor: Colors.white);
+    final theme = Theme.of(context);
+    final backgroundColor = theme.brightness == Brightness.dark ? Colors.black : Colors.white;
+    return AppBar(title: const Text("Tab Bar"), backgroundColor: backgroundColor);
   }
 
   @override
