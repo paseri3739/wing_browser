@@ -12,7 +12,7 @@ class UrlField extends ConsumerWidget {
     this.height = 40.0, // デフォルトの高さ
   });
 
-  SquareIconButton _buildLock(IconData icon, Color color) {
+  SquareIconButton _buildLockButton(IconData icon, Color color) {
     return SquareIconButton(
       height: height,
       icon: icon,
@@ -113,7 +113,7 @@ class UrlField extends ConsumerWidget {
         children: [
           Row(
             children: <Widget>[
-              _buildLock(lockIcon, iconColor),
+              _buildLockButton(lockIcon, iconColor),
               _buildUrlTextField(controller, webViewController, ref, context),
               _buildReloadButton(reloadButtonColor, webViewController),
             ],
