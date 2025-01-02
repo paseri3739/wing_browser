@@ -58,6 +58,7 @@ class HomePage extends StatelessWidget {
           Expanded(child: WebViewHomePage())
         ]),
         // TODO: Responsive height
+        // TODO: remove shade when dark mode
         bottomNavigationBar: BrowserBottomAppBar(height: 70),
         floatingActionButton: SearchButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
