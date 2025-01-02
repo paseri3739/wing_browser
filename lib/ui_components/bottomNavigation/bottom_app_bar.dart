@@ -11,13 +11,15 @@ class BrowserBottomAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final webViewController = ref.watch(webViewProvider).webViewController;
+    final theme = Theme.of(context);
+    final backgroundColor = theme.brightness == Brightness.dark ? Colors.black : Colors.blueGrey;
 
     return SizedBox(
       height: height,
       child: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 5.0,
-        color: Colors.blueGrey,
+        color: backgroundColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween, // 子要素を左右に分散させる
           children: <Widget>[
