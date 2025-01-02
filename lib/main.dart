@@ -3,12 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wing_browser/ui_components/bottom_navigation/search_button.dart';
-
-import 'ui_components/bottom_navigation/bottom_app_bar.dart';
-import 'ui_components/top_navigation/browser_app_bar_component.dart';
-import 'ui_components/top_navigation/url_field.dart';
-import 'webview/web_view_home_page.dart';
+import 'package:wing_browser/home_page.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,36 +28,5 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const HomePage();
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    // SafeArea: avoid being hidden by the system ui
-    return const SafeArea(
-      top: true,
-      bottom: true,
-      child: Scaffold(
-        // Hide Floating button when keyboard appeared
-        resizeToAvoidBottomInset: false,
-        appBar: BrowserAppBarComponent(),
-        body: Column(children: [
-          UrlField(
-            height: 30, //マジックナンバー
-          ),
-          Expanded(child: WebViewHomePage())
-        ]),
-        // TODO: Responsive height
-        // TODO: remove shade when dark mode
-        bottomNavigationBar: BrowserBottomAppBar(height: 70),
-        floatingActionButton: SearchButton(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      ),
-    );
   }
 }
