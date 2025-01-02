@@ -12,6 +12,83 @@ class UrlField extends ConsumerWidget {
     this.height = 40.0, // デフォルトの高さ
   });
 
+  SquareIconButton _buildLock(IconData icon, Color color) {
+    return SquareIconButton(
+      height: height,
+      icon: icon,
+      color: color,
+      // TODO: ロックアイコンの処理を追加
+      onPressed: () {},
+    );
+  }
+
+  Expanded _buildUrlTextField(TextEditingController controller, InAppWebViewController? webViewController,
+      WidgetRef ref, BuildContext context) {
+    return Expanded(
+      child: SizedBox(
+        height: height,
+        child: TextField(
+          controller: controller,
+          textAlign: TextAlign.center,
+          onSubmitted: (string) async {
+            if (webViewController != null) {
+              try {
+                // 入力された文字列が有効なURLかチェック
+                final uri = Uri.parse(string);
+
+                // スキームが空の場合は http:// を補完
+                final correctedUri = uri.scheme.isEmpty
+                    ? WebUri("http://$string") // HTTP をデフォルトとする
+                    : WebUri(string);
+
+                // URLをロード
+                await webViewController.loadUrl(
+                  urlRequest: URLRequest(url: correctedUri),
+                );
+
+                // 状態を更新
+                ref.read(webViewProvider.notifier).setUrl(correctedUri);
+              } catch (e) {
+                // 無効なURLの場合のエラーハンドリング
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Invalid URL")),
+                );
+              }
+            }
+          },
+          textInputAction: TextInputAction.go,
+          decoration: InputDecoration(
+            isDense: false,
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 0,
+              horizontal: 16.0,
+            ),
+            filled: true,
+            fillColor: Colors.grey[300],
+            hintText: "Search For ...",
+            hintStyle: const TextStyle(color: Colors.black54, fontSize: 16.0),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(3.0),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          style: const TextStyle(color: Colors.black, fontSize: 16.0),
+        ),
+      ),
+    );
+  }
+
+  SquareIconButton _buildReloadButton(Color reloadButtonColor, InAppWebViewController? webViewController) {
+    SquareIconButton(
+      height: height,
+      icon: Icons.refresh,
+      color: reloadButtonColor,
+      onPressed: () async {
+        await webViewController?.reload();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final TextEditingController controller = TextEditingController();
@@ -36,72 +113,9 @@ class UrlField extends ConsumerWidget {
         children: [
           Row(
             children: <Widget>[
-              SquareIconButton(
-                height: height,
-                icon: lockIcon,
-                color: iconColor,
-                onPressed: () {},
-              ),
-              Expanded(
-                child: SizedBox(
-                  height: height,
-                  child: TextField(
-                    controller: controller,
-                    textAlign: TextAlign.center,
-                    onSubmitted: (string) async {
-                      if (webViewController != null) {
-                        try {
-                          // 入力された文字列が有効なURLかチェック
-                          final uri = Uri.parse(string);
-
-                          // スキームが空の場合は http:// を補完
-                          final correctedUri = uri.scheme.isEmpty
-                              ? WebUri("http://$string") // HTTP をデフォルトとする
-                              : WebUri(string);
-
-                          // URLをロード
-                          await webViewController.loadUrl(
-                            urlRequest: URLRequest(url: correctedUri),
-                          );
-
-                          // 状態を更新
-                          ref.read(webViewProvider.notifier).setUrl(correctedUri);
-                        } catch (e) {
-                          // 無効なURLの場合のエラーハンドリング
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Invalid URL")),
-                          );
-                        }
-                      }
-                    },
-                    textInputAction: TextInputAction.go,
-                    decoration: InputDecoration(
-                      isDense: false,
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 16.0,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[300],
-                      hintText: "Search For ...",
-                      hintStyle: const TextStyle(color: Colors.black54, fontSize: 16.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3.0),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                    style: const TextStyle(color: Colors.black, fontSize: 16.0),
-                  ),
-                ),
-              ),
-              SquareIconButton(
-                height: height,
-                icon: Icons.refresh,
-                color: reloadButtonColor,
-                onPressed: () async {
-                  await webViewController?.reload();
-                },
-              ),
+              _buildLock(lockIcon, iconColor),
+              _buildUrlTextField(controller, webViewController, ref, context),
+              _buildReloadButton(reloadButtonColor, webViewController),
             ],
           ),
           // FIXME: プログレスバーの表示位置を調整
