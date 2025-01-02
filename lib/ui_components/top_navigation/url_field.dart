@@ -103,13 +103,19 @@ class UrlField extends ConsumerWidget {
             ],
           ),
           Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            // Visibility: 子要素の表示を制御する
+            child: Visibility(
+              // プログレスが0より大きい場合に表示
+              visible: progress > 0,
               child: LinearProgressIndicator(
                 backgroundColor: Colors.white,
                 value: progress,
-              ))
+              ),
+            ),
+          )
         ],
       ),
     ]);
