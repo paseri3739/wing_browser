@@ -18,6 +18,8 @@ class UrlField extends ConsumerWidget {
     final WebUri? url = ref.watch(webViewProvider).url;
     final progress = ref.watch(webViewProvider).progress;
     final InAppWebViewController? webViewController = ref.watch(webViewProvider).webViewController;
+    final theme = Theme.of(context);
+    final reloadButtonColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
 
     // URLを反映
     if (url != null && controller.text != url.toString()) {
@@ -95,7 +97,7 @@ class UrlField extends ConsumerWidget {
               SquareIconButton(
                 height: height,
                 icon: Icons.refresh,
-                color: Colors.black,
+                color: reloadButtonColor,
                 onPressed: () async {
                   await webViewController?.reload();
                 },
