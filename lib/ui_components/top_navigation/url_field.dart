@@ -79,7 +79,7 @@ class UrlField extends ConsumerWidget {
   }
 
   SquareIconButton _buildReloadButton(Color reloadButtonColor, InAppWebViewController? webViewController) {
-    SquareIconButton(
+    return SquareIconButton(
       height: height,
       icon: Icons.refresh,
       color: reloadButtonColor,
