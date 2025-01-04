@@ -17,6 +17,8 @@ class HomePage extends StatelessWidget {
       top: true,
       bottom: true,
       child: Scaffold(
+        // true: extend body to bottom of the screen. avoid blank notched area
+        extendBody: true,
         // Hide Floating button when keyboard appeared
         resizeToAvoidBottomInset: false,
         appBar: BrowserAppBarComponent(),
