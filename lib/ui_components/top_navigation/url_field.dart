@@ -12,7 +12,8 @@ class UrlField extends ConsumerWidget {
     this.height = 40.0, // デフォルトの高さ
   });
 
-  SquareIconButton _buildLockButton(IconData icon, Color color) {
+  // UrlFieldの各要素は更新のタイミングと範囲が同一のためクラスにせず、関数で定義した
+  SquareIconButton _buildLockButton(IconData icon, Color color, double height) {
     return SquareIconButton(
       height: height,
       icon: icon,
@@ -23,7 +24,7 @@ class UrlField extends ConsumerWidget {
   }
 
   Expanded _buildUrlTextField(TextEditingController controller, InAppWebViewController? webViewController,
-      WidgetRef ref, BuildContext context) {
+      WidgetRef ref, BuildContext context, double height) {
     return Expanded(
       child: SizedBox(
         height: height,
@@ -78,7 +79,8 @@ class UrlField extends ConsumerWidget {
     );
   }
 
-  SquareIconButton _buildReloadButton(Color reloadButtonColor, InAppWebViewController? webViewController) {
+  SquareIconButton _buildReloadButton(
+      Color reloadButtonColor, InAppWebViewController? webViewController, double height) {
     return SquareIconButton(
       height: height,
       icon: Icons.refresh,
@@ -113,9 +115,9 @@ class UrlField extends ConsumerWidget {
         children: [
           Row(
             children: <Widget>[
-              _buildLockButton(lockIcon, iconColor),
-              _buildUrlTextField(controller, webViewController, ref, context),
-              _buildReloadButton(reloadButtonColor, webViewController),
+              _buildLockButton(lockIcon, iconColor, height),
+              _buildUrlTextField(controller, webViewController, ref, context, height),
+              _buildReloadButton(reloadButtonColor, webViewController, height),
             ],
           ),
           // FIXME: プログレスバーの表示位置を調整
