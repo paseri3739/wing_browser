@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
         appBar: BrowserAppBarComponent(),
         body: Column(children: [
           UrlField(
-            height: 30, //マジックナンバー
+            height: 30, // FIXME: マジックナンバー
           ),
           Expanded(child: WebViewHomePage())
         ]),
