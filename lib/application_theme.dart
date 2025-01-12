@@ -15,7 +15,7 @@ ThemeData darkTheme = ThemeData(
     unselectedItemColor: Colors.grey,
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.blue,
     foregroundColor: Colors.black,
   ),
   inputDecorationTheme: InputDecorationTheme(
