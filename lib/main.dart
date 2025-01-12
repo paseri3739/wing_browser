@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wing_browser/application_theme.dart';
 import 'package:wing_browser/home_page.dart';
 
 Future<void> main(List<String> args) async {
@@ -16,7 +17,7 @@ Future<void> main(List<String> args) async {
     child: MaterialApp(
       home: MyApp(),
       theme: ThemeData.light(), // ライトテーマ
-      darkTheme: ThemeData.dark(), // ダークテーマ
+      darkTheme: darkTheme, // ダークテーマ
       themeMode: ThemeMode.system, // システムのテーマに従う
     ),
   ));
