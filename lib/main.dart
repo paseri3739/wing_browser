@@ -16,7 +16,7 @@ Future<void> main(List<String> args) async {
   runApp(ProviderScope(
     child: MaterialApp(
       home: MyApp(),
-      theme: ThemeData.light(), // ライトテーマ
+      theme: lightTheme, // ライトテーマ
       darkTheme: darkTheme, // ダークテーマ
       themeMode: ThemeMode.system, // システムのテーマに従う
     ),
