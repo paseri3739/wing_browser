@@ -13,21 +13,23 @@ Future<void> main(List<String> args) async {
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
-  runApp(ProviderScope(
-    child: MaterialApp(
-      home: MyApp(),
-      theme: lightTheme, // ライトテーマ
-      darkTheme: darkTheme, // ダークテーマ
-      themeMode: ThemeMode.system, // システムのテーマに従う
-    ),
-  ));
+  runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends ConsumerWidget {
+  const MyApp({
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    return const HomePage();
+  Widget build(BuildContext context, WidgetRef ref) {
+    // TODO: テーマの切り替え
+    // final theme = ref.watch(themeProvider);
+    return MaterialApp(
+      home: HomePage(),
+      theme: lightTheme, // ライトテーマ
+      darkTheme: darkTheme, // ダークテーマ
+      themeMode: ThemeMode.system, // システムのテーマに従う TODO: ユーザー設定の反映
+    );
   }
 }
