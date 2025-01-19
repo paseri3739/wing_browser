@@ -51,9 +51,11 @@ class UrlField extends ConsumerWidget {
                 ref.read(webViewProvider.notifier).setUrl(correctedUri);
               } catch (e) {
                 // 無効なURLの場合のエラーハンドリング
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Invalid URL")),
-                );
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Invalid URL")),
+                  );
+                }
               }
             }
           },
