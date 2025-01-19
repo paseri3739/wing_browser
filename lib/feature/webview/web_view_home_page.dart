@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wing_browser/webview/state/web_view_model.dart';
+import 'package:wing_browser/feature/webview/web_view_model.dart';
 
 class WebViewHomePage extends ConsumerStatefulWidget {
   const WebViewHomePage({super.key});
