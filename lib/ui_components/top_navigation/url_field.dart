@@ -32,6 +32,7 @@ class UrlField extends ConsumerWidget {
           controller: controller,
           textAlign: TextAlign.center,
           onSubmitted: (string) async {
+            //TODO: 詳細なロジックをドメイン層に移譲する
             if (webViewController != null) {
               try {
                 // 入力された文字列が有効なURLかチェック
