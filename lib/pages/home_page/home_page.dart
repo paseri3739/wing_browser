@@ -13,7 +13,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // SafeArea: avoid being hidden by the system ui
-    return const SafeArea(
+    // 画面の高さ（論理ピクセル）を取得するサンプルコード
+    final screenHeight = MediaQuery.of(context).size.height;
+    final double urlFieldRatio = 0.03;
+    final double urlFieldPixel = screenHeight * urlFieldRatio;
+
+    return SafeArea(
       top: true,
       bottom: true,
       child: Scaffold(
@@ -24,7 +29,7 @@ class HomePage extends StatelessWidget {
         appBar: BrowserAppBarComponent(),
         body: Column(children: [
           UrlField(
-            height: 30, // FIXME: マジックナンバー
+            height: urlFieldPixel, // 3% of screen height
           ),
           Expanded(child: WebViewHomePage())
         ]),
