@@ -12,7 +12,6 @@ class WebViewHomePage extends ConsumerStatefulWidget {
 }
 
 class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
-  static const int _FINISHED = 100;
   final InAppWebViewSettings _settings = InAppWebViewSettings(isInspectable: kDebugMode); // グローバル変数
   final PullToRefreshSettings _pullToRefreshSettings = PullToRefreshSettings(
     color: Colors.blue,
@@ -59,11 +58,11 @@ class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
       onReceivedError: (controller, request, error) {
         _pullToRefreshController.endRefreshing();
       },
-      onProgressChanged: (controller, progress) {
-        final normalizedProgress = progress / 100.0;
+      onProgressChanged: (controller, progressPercent) {
+        final normalizedProgress = progressPercent / 100.0;
         webViewNotifier.setProgress(normalizedProgress);
 
-        if (progress == _FINISHED) {
+        if (progressPercent == 100) {
           _pullToRefreshController.endRefreshing();
           // 描画前に値がリセットされ、連動してAppBarのプログレスもリセットされる
           webViewNotifier.resetProgress();
