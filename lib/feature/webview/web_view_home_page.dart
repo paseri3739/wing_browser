@@ -13,13 +13,13 @@ class WebViewHomePage extends ConsumerStatefulWidget {
 
 class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
   static const int _FINISHED = 100;
-  late final InAppWebViewController _webViewController;
-  final InAppWebViewSettings _settings = InAppWebViewSettings(isInspectable: kDebugMode);
-  late final PullToRefreshController _pullToRefreshController;
+  final InAppWebViewSettings _settings = InAppWebViewSettings(isInspectable: kDebugMode); // グローバル変数
   final PullToRefreshSettings _pullToRefreshSettings = PullToRefreshSettings(
     color: Colors.blue,
   );
   final String _initialUrl = "https://www.google.com";
+  late final InAppWebViewController _webViewController;
+  late final PullToRefreshController _pullToRefreshController;
 
   @override
   void initState() {
