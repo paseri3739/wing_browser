@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // SafeArea: avoid being hidden by the system ui
-    // 画面の高さ（論理ピクセル）を取得するサンプルコード
+    // 画面の高さ（論理ピクセル）を取得する
     final screenHeight = MediaQuery.of(context).size.height;
     final double urlFieldRatio = 0.03;
     final double urlFieldPixel = screenHeight * urlFieldRatio;
