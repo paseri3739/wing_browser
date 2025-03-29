@@ -17,6 +17,8 @@ class HomePage extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final double urlFieldRatio = 0.03;
     final double urlFieldPixel = screenHeight * urlFieldRatio;
+    final double bottonAppBarRatio = 0.075;
+    final double bottomAppBarPixel = screenHeight * bottonAppBarRatio;
 
     return SafeArea(
       top: true,
@@ -33,9 +35,8 @@ class HomePage extends StatelessWidget {
           ),
           Expanded(child: WebViewHomePage())
         ]),
-        // TODO: Responsive height
         // TODO: remove shade when dark mode
-        bottomNavigationBar: BrowserBottomAppBar(height: 70),
+        bottomNavigationBar: BrowserBottomAppBar(height: bottomAppBarPixel),
         floatingActionButton: SearchButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
