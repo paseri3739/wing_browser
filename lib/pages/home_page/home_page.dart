@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/feature/webview/domain/web_view_model.dart';
 import 'package:wing_browser/feature/webview/web_view_home_page.dart';
+import 'package:wing_browser/pages/home_page/domain/home_page_style.dart';
 import 'package:wing_browser/ui_components/bottom_navigation/bottom_app_bar.dart';
 import 'package:wing_browser/ui_components/bottom_navigation/search_button.dart';
 import 'package:wing_browser/ui_components/top_navigation/browser_app_bar_component.dart';
@@ -16,12 +17,7 @@ class HomePage extends ConsumerWidget {
 
     // レイアウト用のパラメータ
     final screenHeight = MediaQuery.of(context).size.height;
-    final double appBarRatio = 0.075;
-    final double appBarPixel = screenHeight * appBarRatio;
-    final double urlFieldRatio = 0.03;
-    final double urlFieldPixel = screenHeight * urlFieldRatio;
-    final double bottomAppBarRatio = 0.075;
-    final double bottomAppBarPixel = screenHeight * bottomAppBarRatio;
+    final screenMetrics = ScreenMetrics(screenHeight: screenHeight);
 
     // WebView は常にビルドし、onWebViewCreated などを走らせる
     // -> コントローラが取得できたら provider 側が `AsyncData` に遷移する
@@ -36,7 +32,7 @@ class HomePage extends ConsumerWidget {
         return BrowserAppBarComponent(
           // TODO: プロパティとしてバケツリレーせず、single source of truth を守る
           webViewController: webViewState.webViewController,
-          height: appBarPixel,
+          height: screenMetrics.appBarPixel,
         );
       },
       loading: () => const SizedBox.shrink(), // ローディング中は空やプレースホルダーなど
@@ -46,12 +42,12 @@ class HomePage extends ConsumerWidget {
     final urlFieldWidget = webViewAsyncValue.when(
       data: (webViewState) {
         return UrlField(
-          height: urlFieldPixel,
+          height: screenMetrics.urlFieldPixel,
           webViewController: webViewState.webViewController,
         );
       },
-      loading: () => SizedBox(height: urlFieldPixel),
-      error: (error, stack) => SizedBox(height: urlFieldPixel),
+      loading: () => SizedBox(height: screenMetrics.urlFieldPixel),
+      error: (error, stack) => SizedBox(height: screenMetrics.urlFieldPixel),
     );
 
     // ローディング・エラー時に重ねて表示するレイヤー
@@ -81,7 +77,7 @@ class HomePage extends ConsumerWidget {
             overlayWidget,
           ],
         ),
-        bottomNavigationBar: BrowserBottomAppBar(height: bottomAppBarPixel),
+        bottomNavigationBar: BrowserBottomAppBar(height: screenMetrics.bottomAppBarPixel),
         floatingActionButton: const SearchButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
