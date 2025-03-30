@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wing_browser/feature/webview/domain/web_view_model.dart';
 import 'package:wing_browser/feature/webview/web_view_home_page.dart';
-import 'package:wing_browser/feature/webview/web_view_model.dart';
 import 'package:wing_browser/ui_components/bottom_navigation/bottom_app_bar.dart';
 import 'package:wing_browser/ui_components/bottom_navigation/search_button.dart';
 import 'package:wing_browser/ui_components/top_navigation/browser_app_bar_component.dart';

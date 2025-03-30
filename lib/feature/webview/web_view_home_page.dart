@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'web_view_model.dart';
+import 'domain/web_view_model.dart';
 
 class WebViewHomePage extends ConsumerStatefulWidget {
   const WebViewHomePage({super.key});
@@ -35,14 +35,14 @@ class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
             );
         if (stateData != null) {
           final controller = stateData.webViewController;
-          if (defaultTargetPlatform == TargetPlatform.android) {
-            controller.reload();
-          } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-            final url = await controller.getUrl();
-            if (url != null) {
-              controller.loadUrl(urlRequest: URLRequest(url: url));
-            }
-          }
+          // if (defaultTargetPlatform == TargetPlatform.android) {
+          controller.reload();
+          // } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+          //   final url = await controller.getUrl();
+          //   if (url != null) {
+          //     controller.loadUrl(urlRequest: URLRequest(url: url));
+          //   }
+          // }
         }
       },
     );

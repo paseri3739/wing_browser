@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wing_browser/feature/webview/web_view_model.dart';
+import 'package:wing_browser/feature/webview/domain/web_view_model.dart';
 import 'package:wing_browser/ui_components/bottom_navigation/browser_popup_menu.dart';
 
 /// BottomAppBar for Browsing Page

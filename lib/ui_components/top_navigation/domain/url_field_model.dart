@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../feature/webview/web_view_model.dart';
+import '../../../feature/webview/domain/web_view_model.dart';
 
 // URLバーのドメインモデル。これをriverpod経由で公開しDIする。
 class UrlFieldModel {
