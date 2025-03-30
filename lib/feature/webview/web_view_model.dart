@@ -1,20 +1,20 @@
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// State class for WebView state management
+// WebViewの状態クラス
 final class WebViewState {
-  final WebUri? url;
-  final String? title;
+  final WebUri url;
+  final String title;
   final double progress;
-  final InAppWebViewController? webViewController;
-  final PullToRefreshController? pullToRefreshController;
+  final InAppWebViewController webViewController;
+  final PullToRefreshController pullToRefreshController;
 
   WebViewState({
-    this.url,
-    this.title,
+    required this.url,
+    required this.title,
     this.progress = 0.0,
-    this.webViewController,
-    this.pullToRefreshController,
+    required this.webViewController,
+    required this.pullToRefreshController,
   });
 
   WebViewState copyWith({
@@ -34,36 +34,55 @@ final class WebViewState {
   }
 }
 
-/// StateNotifier to manage WebViewState
-final class WebViewNotifier extends StateNotifier<WebViewState> {
-  WebViewNotifier() : super(WebViewState());
+// 非同期状態を管理するStateNotifier
+final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewState>> {
+  WebViewNotifier() : super(const AsyncValue.loading());
 
-  void setUrl(WebUri url) {
-    state = state.copyWith(url: url);
+  // InAppWebViewのonWebViewCreatedで呼び出す（pullToRefreshControllerも受け取る）
+  void onWebViewCreated(
+    InAppWebViewController controller, {
+    required PullToRefreshController pullToRefreshController,
+  }) {
+    // 初期値（必要に応じて調整）
+    final initialUrl = WebUri("https://www.google.com");
+    const initialTitle = "Google";
+
+    final newState = WebViewState(
+      url: initialUrl,
+      title: initialTitle,
+      webViewController: controller,
+      pullToRefreshController: pullToRefreshController,
+    );
+
+    state = AsyncValue.data(newState);
   }
 
-  void setTitle(String title) {
-    state = state.copyWith(title: title);
+  // 複数の状態更新を1つのメソッドで行う
+  void update({
+    WebUri? url,
+    String? title,
+    double? progress,
+    InAppWebViewController? webViewController,
+    PullToRefreshController? pullToRefreshController,
+  }) {
+    state.whenData((data) {
+      state = AsyncValue.data(data.copyWith(
+        url: url,
+        title: title,
+        progress: progress,
+        webViewController: webViewController,
+        pullToRefreshController: pullToRefreshController,
+      ));
+    });
   }
 
-  void setProgress(double progress) {
-    state = state.copyWith(progress: progress);
-  }
-
-  void setWebViewController(InAppWebViewController webViewController) {
-    state = state.copyWith(webViewController: webViewController);
-  }
-
-  void setPullToRefreshController(PullToRefreshController pullToRefreshController) {
-    state = state.copyWith(pullToRefreshController: pullToRefreshController);
-  }
-
+  // 進捗状態のリセット
   void resetProgress() {
-    state = state.copyWith(progress: 0.0);
+    update(progress: 0.0);
   }
 }
 
-/// Provider for WebViewNotifier
-final webViewProvider = StateNotifierProvider<WebViewNotifier, WebViewState>((ref) {
+/// 非同期状態を提供するためのProvider
+final webViewProvider = StateNotifierProvider<WebViewNotifier, AsyncValue<WebViewState>>((ref) {
   return WebViewNotifier();
 });

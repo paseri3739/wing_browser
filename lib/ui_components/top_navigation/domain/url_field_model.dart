@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wing_browser/feature/webview/web_view_model.dart';
 
+import '../../../feature/webview/web_view_model.dart';
+
+// URLバーのドメインモデル。これをriverpod経由で公開しDIする。
 class UrlFieldModel {
+  final bool isLoading;
+
+  UrlFieldModel({
+    this.isLoading = false,
+  });
+
   // null許容しない
   static Future<void> onSubmitted(
       String string, InAppWebViewController webViewController, WidgetRef ref, BuildContext context) async {
@@ -18,7 +26,7 @@ class UrlFieldModel {
         urlRequest: URLRequest(url: correctedUri),
       );
       // 状態を更新
-      ref.read(webViewProvider.notifier).setUrl(correctedUri);
+      ref.read(webViewProvider.notifier).update(url: correctedUri);
     } catch (e) {
       // 無効なURLの場合のエラーハンドリング
       if (context.mounted) {
@@ -27,5 +35,17 @@ class UrlFieldModel {
         );
       }
     }
+  }
+
+  UrlFieldModel onLockButtonPressed() {
+    return this;
+  }
+
+  UrlFieldModel copyWith({
+    bool? isLoading,
+  }) {
+    return UrlFieldModel(
+      isLoading: isLoading ?? this.isLoading,
+    );
   }
 }

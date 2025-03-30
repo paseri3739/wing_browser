@@ -10,7 +10,11 @@ class BrowserBottomAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final webViewController = ref.watch(webViewProvider).webViewController;
+    final asyncState = ref.watch(webViewProvider);
+    final webViewController = asyncState.maybeWhen(
+      data: (data) => data.webViewController,
+      orElse: () => null,
+    );
 
     return SizedBox(
       height: height,
