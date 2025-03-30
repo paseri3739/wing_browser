@@ -25,10 +25,8 @@ class UrlTextField extends ConsumerWidget {
           controller: controller,
           textAlign: TextAlign.center,
           onSubmitted: (string) async {
-            if (webViewController != null) {
-              // TODO: これを随所に書かなくて済むようにドメイン層を設計する。
-              await UrlFieldModel.onSubmitted(string, webViewController, ref, context);
-            }
+            // nullを排除しているのでそのまま使える
+            await UrlFieldModel.onSubmitted(string, webViewController, ref, context);
           },
           textInputAction: TextInputAction.go,
           decoration: InputDecoration(
