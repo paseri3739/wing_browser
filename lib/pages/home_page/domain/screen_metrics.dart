@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+// TODO: 比率を見直し、さらにユーザー設定できるようにする
 @immutable
 class ScreenMetrics {
   final double screenHeight;
