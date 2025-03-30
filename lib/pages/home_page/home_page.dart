@@ -16,6 +16,8 @@ class HomePage extends ConsumerWidget {
 
     // レイアウト用のパラメータ
     final screenHeight = MediaQuery.of(context).size.height;
+    final double appBarRatio = 0.075;
+    final double appBarPixel = screenHeight * appBarRatio;
     final double urlFieldRatio = 0.03;
     final double urlFieldPixel = screenHeight * urlFieldRatio;
     final double bottomAppBarRatio = 0.075;
@@ -34,6 +36,7 @@ class HomePage extends ConsumerWidget {
         return BrowserAppBarComponent(
           // TODO: プロパティとしてバケツリレーせず、single source of truth を守る
           webViewController: webViewState.webViewController,
+          height: appBarPixel,
         );
       },
       loading: () => const SizedBox.shrink(), // ローディング中は空やプレースホルダーなど
