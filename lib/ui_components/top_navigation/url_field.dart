@@ -33,7 +33,9 @@ class UrlField extends ConsumerWidget {
           controller: controller,
           textAlign: TextAlign.center,
           onSubmitted: (string) async {
-            await UrlFieldModel.onSubmitted(string, webViewController, ref, context);
+            if (webViewController != null) {
+              await UrlFieldModel.onSubmitted(string, webViewController, ref, context);
+            }
           },
           textInputAction: TextInputAction.go,
           decoration: InputDecoration(

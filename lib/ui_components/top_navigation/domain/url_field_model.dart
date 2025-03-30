@@ -5,7 +5,7 @@ import 'package:wing_browser/feature/webview/web_view_model.dart';
 
 class UrlFieldModel {
   static Future<void> onSubmitted(
-      String string, InAppWebViewController? webViewController, WidgetRef ref, BuildContext context) async {
+      String string, InAppWebViewController webViewController, WidgetRef ref, BuildContext context) async {
     try {
       final uri = Uri.parse(string);
 
@@ -13,7 +13,7 @@ class UrlFieldModel {
           ? WebUri("http://$string") // HTTP をデフォルトとする
           : WebUri(string);
 
-      await webViewController?.loadUrl(
+      await webViewController.loadUrl(
         urlRequest: URLRequest(url: correctedUri),
       );
       // 状態を更新
