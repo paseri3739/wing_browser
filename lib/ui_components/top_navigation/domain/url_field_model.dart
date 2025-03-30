@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/feature/webview/web_view_model.dart';
 
 class UrlFieldModel {
-  // 純粋関数にしたいのでnull許容しない
+  // null許容しない
   static Future<void> onSubmitted(
       String string, InAppWebViewController webViewController, WidgetRef ref, BuildContext context) async {
     try {
