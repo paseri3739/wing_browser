@@ -19,4 +19,18 @@ class ScreenMetrics {
   })  : appBarPixel = screenHeight * appBarRatio,
         urlFieldPixel = screenHeight * urlFieldRatio,
         bottomAppBarPixel = screenHeight * bottomAppBarRatio;
+
+  ScreenMetrics updateWith({
+    double? screenHeight,
+    double? appBarRatio,
+    double? urlFieldRatio,
+    double? bottomAppBarRatio,
+  }) {
+    return ScreenMetrics(
+      screenHeight: screenHeight ?? this.screenHeight,
+      appBarRatio: appBarRatio ?? this.appBarRatio,
+      urlFieldRatio: urlFieldRatio ?? this.urlFieldRatio,
+      bottomAppBarRatio: bottomAppBarRatio ?? this.bottomAppBarRatio,
+    );
+  }
 }
