@@ -3,6 +3,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/feature/webview/web_view_model.dart';
 import 'package:wing_browser/ui_components/common/square_icon_button.dart';
+import 'package:wing_browser/ui_components/top_navigation/domain/url_field_model.dart';
 
 class UrlField extends ConsumerWidget {
   final double height; // 高さを指定するプロパティ
@@ -32,33 +33,7 @@ class UrlField extends ConsumerWidget {
           controller: controller,
           textAlign: TextAlign.center,
           onSubmitted: (string) async {
-            //TODO: 詳細なロジックをドメイン層に移譲する
-            if (webViewController != null) {
-              try {
-                // 入力された文字列が有効なURLかチェック
-                final uri = Uri.parse(string);
-
-                // スキームが空の場合は http:// を補完
-                final correctedUri = uri.scheme.isEmpty
-                    ? WebUri("http://$string") // HTTP をデフォルトとする
-                    : WebUri(string);
-
-                // URLをロード
-                await webViewController.loadUrl(
-                  urlRequest: URLRequest(url: correctedUri),
-                );
-
-                // 状態を更新
-                ref.read(webViewProvider.notifier).setUrl(correctedUri);
-              } catch (e) {
-                // 無効なURLの場合のエラーハンドリング
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Invalid URL")),
-                  );
-                }
-              }
-            }
+            await UrlFieldModel.onSubmitted(string, webViewController, ref, context);
           },
           textInputAction: TextInputAction.go,
           decoration: InputDecoration(
