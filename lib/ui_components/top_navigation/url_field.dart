@@ -27,19 +27,6 @@ class UrlField extends ConsumerWidget {
     );
   }
 
-  SquareIconButton _buildReloadButton(
-      Color reloadButtonColor, InAppWebViewController webViewController, double height) {
-    return SquareIconButton(
-      height: height,
-      icon: Icons.refresh,
-      color: reloadButtonColor,
-      onPressed: () async {
-        // TODO: バツにする
-        await webViewController.reload();
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final TextEditingController controller = TextEditingController();
