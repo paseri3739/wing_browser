@@ -34,6 +34,7 @@ class UrlField extends ConsumerWidget {
           textAlign: TextAlign.center,
           onSubmitted: (string) async {
             if (webViewController != null) {
+              // TODO: これを随所に書かなくて済むようにドメイン層を設計する。
               await UrlFieldModel.onSubmitted(string, webViewController, ref, context);
             }
           },
