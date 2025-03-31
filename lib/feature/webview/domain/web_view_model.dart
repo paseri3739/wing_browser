@@ -13,14 +13,14 @@ final class LoadingProgress {
 }
 
 // WebViewの状態クラス
-final class WebViewState {
+final class WebViewModel {
   final WebUri url;
   final WebViewTabTitle title;
   final LoadingProgress loadingProgress;
   final InAppWebViewController webViewController;
   final PullToRefreshController pullToRefreshController;
 
-  WebViewState({
+  WebViewModel({
     required this.url,
     required this.title,
     required this.loadingProgress,
@@ -28,14 +28,14 @@ final class WebViewState {
     required this.pullToRefreshController,
   });
 
-  WebViewState copyWith({
+  WebViewModel copyWith({
     WebUri? url,
     WebViewTabTitle? title,
     LoadingProgress? loadingProgress,
     InAppWebViewController? webViewController,
     PullToRefreshController? pullToRefreshController,
   }) {
-    return WebViewState(
+    return WebViewModel(
       url: url ?? this.url,
       title: title ?? this.title,
       loadingProgress: loadingProgress ?? this.loadingProgress,
@@ -46,7 +46,7 @@ final class WebViewState {
 }
 
 // 非同期状態を管理するStateNotifier
-final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewState>> {
+final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewModel>> {
   WebViewNotifier() : super(const AsyncValue.loading());
 
   // InAppWebViewのonWebViewCreatedで呼び出す（pullToRefreshControllerも受け取る）
@@ -58,7 +58,7 @@ final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewState>> {
     final initialUrl = WebUri("https://www.google.com");
     const initialTitle = WebViewTabTitle("Google");
 
-    final newState = WebViewState(
+    final newState = WebViewModel(
       url: initialUrl,
       title: initialTitle,
       loadingProgress: LoadingProgress(0.0),
@@ -95,12 +95,12 @@ final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewState>> {
 }
 
 /// 非同期状態を提供するためのProvider
-final webViewProvider = StateNotifierProvider<WebViewNotifier, AsyncValue<WebViewState>>((ref) {
+final webViewProvider = StateNotifierProvider<WebViewNotifier, AsyncValue<WebViewModel>>((ref) {
   return WebViewNotifier();
 });
 
 /// 非同期状態を隠蔽し、初期化済み WebViewState を返す（初期化前は例外）
-final webViewStateProvider = Provider<WebViewState>((ref) {
+final webViewStateProvider = Provider<WebViewModel>((ref) {
   final asyncState = ref.watch(webViewProvider);
   return asyncState.when(
     data: (data) => data,
