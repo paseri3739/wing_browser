@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/feature/webview/domain/web_view_model.dart';
 import 'package:wing_browser/ui_components/common/square_icon_button.dart';
@@ -7,13 +6,11 @@ import 'package:wing_browser/ui_components/common/square_icon_button.dart';
 class ReloadButton extends ConsumerStatefulWidget {
   final double height;
   final Color reloadButtonColor;
-  final InAppWebViewController webViewController;
 
   const ReloadButton({
     super.key,
     required this.height,
     required this.reloadButtonColor,
-    required this.webViewController,
   });
 
   @override
@@ -28,17 +25,14 @@ class _ReloadButtonState extends ConsumerState<ReloadButton> {
       _isLoading = true;
     });
     // リロード実行
-    await widget.webViewController.reload();
-    // リロード直後は、webViewProviderのprogressでロード進捗を監視する
+    final webViewState = ref.read(webViewStateProvider);
+    await webViewState.webViewController.reload(); // プログレスをプログレスバーのウィジェットが監視することでUIが変更される。
   }
 
   @override
   Widget build(BuildContext context) {
-    final asyncState = ref.watch(webViewProvider);
-    final progress = asyncState.maybeWhen(
-      data: (data) => data.loadingProgress.progress,
-      orElse: () => 0,
-    );
+    final stateData = ref.watch(webViewStateProvider);
+    final progress = stateData.loadingProgress.progress;
 
     // 進捗が完了している場合は、ローディング状態を解除
     if (progress >= 1.0 && _isLoading) {

@@ -63,7 +63,6 @@ class UrlField extends ConsumerWidget {
               ReloadButton(
                 height: height,
                 reloadButtonColor: reloadButtonColor,
-                webViewController: webViewController,
               ),
             ],
           ),
