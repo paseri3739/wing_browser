@@ -14,10 +14,10 @@ class ReloadButton extends ConsumerStatefulWidget {
   });
 
   @override
-  _ReloadButtonState createState() => _ReloadButtonState();
+  ReloadButtonState createState() => ReloadButtonState();
 }
 
-class _ReloadButtonState extends ConsumerState<ReloadButton> {
+class ReloadButtonState extends ConsumerState<ReloadButton> {
   bool _isLoading = false;
 
   Future<void> _onPressed() async {
