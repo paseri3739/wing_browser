@@ -14,6 +14,18 @@ class WebViewConfig {
     required this.pullToRefreshSettings,
     required this.initialUrl,
   });
+
+  WebViewConfig copyWith({
+    InAppWebViewSettings? settings,
+    PullToRefreshSettings? pullToRefreshSettings,
+    String? initialUrl,
+  }) {
+    return WebViewConfig(
+      settings: settings ?? this.settings,
+      pullToRefreshSettings: pullToRefreshSettings ?? this.pullToRefreshSettings,
+      initialUrl: initialUrl ?? this.initialUrl,
+    );
+  }
 }
 
 final defaultWebViewConfig = WebViewConfig(
@@ -22,6 +34,22 @@ final defaultWebViewConfig = WebViewConfig(
   initialUrl: "https://www.google.com",
 );
 
-final webViewConfigProvider = Provider<WebViewConfig>((ref) {
-  return defaultWebViewConfig;
+class WebViewConfigNotifier extends StateNotifier<WebViewConfig> {
+  WebViewConfigNotifier() : super(defaultWebViewConfig);
+
+  void updateSettings(InAppWebViewSettings newSettings) {
+    state = state.copyWith(settings: newSettings);
+  }
+
+  void updatePullToRefreshSettings(PullToRefreshSettings newPullToRefreshSettings) {
+    state = state.copyWith(pullToRefreshSettings: newPullToRefreshSettings);
+  }
+
+  void updateInitialUrl(String newInitialUrl) {
+    state = state.copyWith(initialUrl: newInitialUrl);
+  }
+}
+
+final webViewConfigProvider = StateNotifierProvider<WebViewConfigNotifier, WebViewConfig>((ref) {
+  return WebViewConfigNotifier();
 });
