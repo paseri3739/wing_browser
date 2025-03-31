@@ -17,7 +17,7 @@ class UrlField extends ConsumerWidget {
   });
 
   // UrlFieldの各要素は更新のタイミングと範囲が同一のためクラスにせず、関数で定義した
-  SquareIconButton _buildLockButton(IconData icon, Color color, double height) {
+  SquareIconButton _buildLockButton(IconData icon, Color color, double height, WidgetRef ref) {
     return SquareIconButton(
       height: height,
       icon: icon,
@@ -58,7 +58,7 @@ class UrlField extends ConsumerWidget {
         children: [
           Row(
             children: <Widget>[
-              _buildLockButton(lockIcon, iconColor, height),
+              _buildLockButton(lockIcon, iconColor, height, ref),
               UrlTextField(controller: controller, height: height, webViewController: webViewController),
               ReloadButton(
                 height: height,
