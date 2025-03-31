@@ -16,7 +16,7 @@ class WebViewConfig {
   });
 }
 
-var defaultWebViewConfig = WebViewConfig(
+final defaultWebViewConfig = WebViewConfig(
   settings: InAppWebViewSettings(isInspectable: kDebugMode),
   pullToRefreshSettings: PullToRefreshSettings(color: Colors.blue),
   initialUrl: "https://www.google.com",
