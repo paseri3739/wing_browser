@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'domain/web_view_config.dart'; // 設定クラスをインポート
-import 'domain/web_view_model.dart';
+import '../../domain/web_view_config.dart'; // 設定クラスをインポート
+import '../../domain/web_view_model.dart';
 
 class WebViewHomePage extends ConsumerWidget {
   const WebViewHomePage({super.key});

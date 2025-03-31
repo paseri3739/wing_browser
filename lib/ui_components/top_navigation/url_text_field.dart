@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wing_browser/feature/webview/domain/web_view_model.dart';
+import 'package:wing_browser/domain/web_view_model.dart';
 import 'package:wing_browser/ui_components/top_navigation/domain/url_field_model.dart';
 
 class UrlTextField extends ConsumerWidget {
