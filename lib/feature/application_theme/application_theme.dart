@@ -55,5 +55,24 @@ ThemeData darkTheme = ThemeData(
   ),
 );
 
-// テーマプロバイダー
-final themeProvider = StateProvider<ThemeData>((ref) => lightTheme);
+// テーマ切替を管理するためのStateNotifier
+class ThemeNotifier extends StateNotifier<ThemeMode> {
+  ThemeNotifier() : super(ThemeMode.system); // 初期状態はシステムテーマ
+
+  // テーマを切り替えるメソッド（ダークテーマとライトテーマをトグル）
+  void toggleTheme() {
+    if (state == ThemeMode.dark) {
+      state = ThemeMode.light;
+    } else {
+      state = ThemeMode.dark;
+    }
+  }
+
+  // システムテーマにリセットする場合のメソッド（必要に応じて使用）
+  void setSystemTheme() {
+    state = ThemeMode.system;
+  }
+}
+
+// テーマ切替用のprovider
+final themeNotifierProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>((ref) => ThemeNotifier());

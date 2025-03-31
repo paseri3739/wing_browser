@@ -23,13 +23,13 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: テーマの切り替え
+    final themeMode = ref.watch(themeNotifierProvider);
     // final theme = ref.watch(themeProvider);
     return MaterialApp(
       home: HomePage(),
       theme: lightTheme, // ライトテーマ
       darkTheme: darkTheme, // ダークテーマ
-      themeMode: ThemeMode.system, // システムのテーマに従う TODO: ユーザー設定の反映
+      themeMode: themeMode, // システムのテーマに従う TODO: ユーザー設定の反映
     );
   }
 }
