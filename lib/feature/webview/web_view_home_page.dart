@@ -5,18 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'domain/web_view_config.dart'; // 設定クラスをインポート
 import 'domain/web_view_model.dart';
 
-class WebViewHomePage extends ConsumerStatefulWidget {
+class WebViewHomePage extends ConsumerWidget {
   const WebViewHomePage({super.key});
 
   @override
-  ConsumerState<WebViewHomePage> createState() => _WebViewHomePageState();
-}
-
-// TODO: 状態管理、ビジネスロジックをドメイン層に移管する
-
-class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // ドメイン層から設定情報を取得
     final config = ref.watch(webViewConfigProvider);
     // providerからNotifierを取得
