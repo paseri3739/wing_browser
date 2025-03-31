@@ -98,3 +98,13 @@ final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewState>> {
 final webViewProvider = StateNotifierProvider<WebViewNotifier, AsyncValue<WebViewState>>((ref) {
   return WebViewNotifier();
 });
+
+/// 非同期状態を隠蔽し、初期化済み WebViewState を返す（初期化前は例外）
+final webViewStateProvider = Provider<WebViewState>((ref) {
+  final asyncState = ref.watch(webViewProvider);
+  return asyncState.when(
+    data: (data) => data,
+    loading: () => throw Exception('WebViewState is not initialized yet'),
+    error: (error, stack) => throw Exception('WebViewState error: $error'),
+  );
+});

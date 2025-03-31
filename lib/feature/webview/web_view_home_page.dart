@@ -21,29 +21,16 @@ class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // providerからNotifierを取得
+    // StateNotifier からの更新用に notifier を取得
     final webViewNotifier = ref.read(webViewProvider.notifier);
 
-    // InAppWebViewに渡すPullToRefreshControllerをbuild内で生成
+    // InAppWebView に渡す PullToRefreshController を build 内で生成
     final pullToRefreshController = PullToRefreshController(
       settings: _pullToRefreshSettings,
       onRefresh: () async {
-        // providerの状態からwebViewControllerを取得（nullの場合は何もしない）
-        final stateData = ref.read(webViewProvider).maybeWhen(
-              data: (data) => data,
-              orElse: () => null,
-            );
-        if (stateData != null) {
-          final controller = stateData.webViewController;
-          // if (defaultTargetPlatform == TargetPlatform.android) {
-          controller.reload();
-          // } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-          //   final url = await controller.getUrl();
-          //   if (url != null) {
-          //     controller.loadUrl(urlRequest: URLRequest(url: url));
-          //   }
-          // }
-        }
+        // computed provider を利用して、非null な WebViewState を直接取得（初期化前は例外となる）
+        final stateData = ref.read(webViewStateProvider);
+        stateData.webViewController.reload();
       },
     );
 
@@ -52,7 +39,7 @@ class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
       initialSettings: _settings,
       pullToRefreshController: pullToRefreshController,
       onWebViewCreated: (controller) {
-        // providerの非同期初期化（状態がloadingの場合のみ更新）
+        // provider の非同期初期化（状態が loading の場合のみ更新）
         webViewNotifier.onWebViewCreated(
           controller,
           pullToRefreshController: pullToRefreshController,
@@ -69,11 +56,13 @@ class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
       },
       onProgressChanged: (controller, progressPercent) {
         final normalizedProgress = progressPercent / 100.0;
-        webViewNotifier.update(loadingProgress: LoadingProgress(normalizedProgress));
+        webViewNotifier.update(
+          loadingProgress: LoadingProgress(normalizedProgress),
+        );
 
         if (progressPercent == 100) {
           pullToRefreshController.endRefreshing();
-          // 描画前に値がリセットされ、連動してAppBarのプログレスもリセットされる
+          // 描画前に値がリセットされ、連動して AppBar のプログレスもリセットされる
           webViewNotifier.resetProgress();
         }
       },
