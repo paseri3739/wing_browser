@@ -12,7 +12,7 @@ class UrlField extends ConsumerWidget {
 
   const UrlField({
     super.key,
-    this.height = 40.0, // デフォルトの高さ
+    required this.height,
     required this.webViewController,
   });
 
