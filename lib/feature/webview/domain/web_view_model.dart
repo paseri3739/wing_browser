@@ -14,15 +14,15 @@ final class LoadingProgress {
 
 // WebViewの状態クラス
 final class WebViewModel {
-  final WebUri url;
-  final WebViewTabTitle title;
+  final WebUri currentUrl;
+  final WebViewTabTitle currentTabTitle;
   final LoadingProgress loadingProgress;
   final InAppWebViewController webViewController;
   final PullToRefreshController pullToRefreshController;
 
   WebViewModel({
-    required this.url,
-    required this.title,
+    required this.currentUrl,
+    required this.currentTabTitle,
     required this.loadingProgress,
     required this.webViewController,
     required this.pullToRefreshController,
@@ -36,8 +36,8 @@ final class WebViewModel {
     PullToRefreshController? pullToRefreshController,
   }) {
     return WebViewModel(
-      url: url ?? this.url,
-      title: title ?? this.title,
+      currentUrl: url ?? this.currentUrl,
+      currentTabTitle: title ?? this.currentTabTitle,
       loadingProgress: loadingProgress ?? this.loadingProgress,
       webViewController: webViewController ?? this.webViewController,
       pullToRefreshController: pullToRefreshController ?? this.pullToRefreshController,
@@ -59,8 +59,8 @@ final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewModel>> {
     const initialTitle = WebViewTabTitle("Google");
 
     final newState = WebViewModel(
-      url: initialUrl,
-      title: initialTitle,
+      currentUrl: initialUrl,
+      currentTabTitle: initialTitle,
       loadingProgress: LoadingProgress(0.0),
       webViewController: controller,
       pullToRefreshController: pullToRefreshController,

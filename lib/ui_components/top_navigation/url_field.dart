@@ -32,7 +32,7 @@ class UrlField extends ConsumerWidget {
     final TextEditingController controller = TextEditingController();
     final asyncState = ref.watch(webViewProvider);
     final url = asyncState.maybeWhen(
-      data: (data) => data.url,
+      data: (data) => data.currentUrl,
       orElse: () => null,
     );
     final progress = asyncState.maybeWhen(
