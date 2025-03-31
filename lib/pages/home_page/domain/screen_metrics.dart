@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // TODO: 比率を見直し、さらにユーザー設定できるようにする
 @immutable
@@ -34,3 +35,32 @@ class ScreenMetrics {
     );
   }
 }
+
+class ScreenMetricsNotifier extends StateNotifier<ScreenMetrics> {
+  ScreenMetricsNotifier({required double screenHeight}) : super(ScreenMetrics(screenHeight: screenHeight));
+
+  // MediaQuery などから取得した screenHeight を更新
+  void updateScreenHeight(double newHeight) {
+    state = state.updateWith(screenHeight: newHeight);
+  }
+
+  // appBar の比率を更新
+  void updateAppBarRatio(double newRatio) {
+    state = state.updateWith(appBarRatio: newRatio);
+  }
+
+  // urlField の比率を更新
+  void updateUrlFieldRatio(double newRatio) {
+    state = state.updateWith(urlFieldRatio: newRatio);
+  }
+
+  // bottomAppBar の比率を更新
+  void updateBottomAppBarRatio(double newRatio) {
+    state = state.updateWith(bottomAppBarRatio: newRatio);
+  }
+}
+
+// 初期値はウィジェット側で MediaQuery から取得するため、仮の値(例:0)を設定しておく
+final screenMetricsProvider = StateNotifierProvider<ScreenMetricsNotifier, ScreenMetrics>((ref) {
+  return ScreenMetricsNotifier(screenHeight: 0);
+});

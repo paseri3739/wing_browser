@@ -17,6 +17,7 @@ class HomePage extends ConsumerWidget {
 
     // レイアウト用のパラメータ
     final screenHeight = MediaQuery.of(context).size.height;
+    // TODO: Riverpod管理下にする
     final screenMetrics = ScreenMetrics(screenHeight: screenHeight);
 
     // WebView は常にビルドし、onWebViewCreated などを走らせる
