@@ -6,7 +6,7 @@ ThemeData lightTheme = ThemeData(
   primaryColor: Colors.white,
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: AppBarTheme(
-    color: Colors.white,
+    color: Colors.grey,
     iconTheme: IconThemeData(color: Colors.black),
     actionsIconTheme: IconThemeData(color: Colors.black),
   ),

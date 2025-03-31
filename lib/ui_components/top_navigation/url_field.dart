@@ -39,7 +39,6 @@ class UrlField extends ConsumerWidget {
       data: (data) => data.loadingProgress.progress,
       orElse: () => 0.0,
     );
-    // TODO: nullableをどうにかする
     final theme = Theme.of(context);
     final reloadButtonColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
 
