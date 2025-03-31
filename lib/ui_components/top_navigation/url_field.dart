@@ -58,7 +58,7 @@ class UrlField extends ConsumerWidget {
           Row(
             children: <Widget>[
               _buildLockButton(lockIcon, iconColor, height, ref),
-              UrlTextField(controller: controller, height: height, webViewController: webViewController),
+              UrlTextField(controller: controller, height: height),
               ReloadButton(
                 height: height,
                 reloadButtonColor: reloadButtonColor,

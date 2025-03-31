@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wing_browser/feature/webview/domain/web_view_model.dart';
 import 'package:wing_browser/ui_components/top_navigation/domain/url_field_model.dart';
 
 class UrlTextField extends ConsumerWidget {
   final TextEditingController controller;
   final double height;
-  final InAppWebViewController webViewController;
 
   const UrlTextField({
     super.key,
     required this.controller,
     required this.height,
-    required this.webViewController,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final webViewController = ref.watch(webViewStateProvider).webViewController;
     // TODO: implement build
     return Expanded(
       child: SizedBox(
