@@ -1,33 +1,44 @@
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// プリミティブをやめる
+final class WebViewTabTitle {
+  final String title;
+  const WebViewTabTitle(this.title);
+}
+
+final class LoadingProgress {
+  final double progress;
+  const LoadingProgress(this.progress);
+}
+
 // WebViewの状態クラス
 final class WebViewState {
   final WebUri url;
-  final String title;
-  final double progress;
+  final WebViewTabTitle title;
+  final LoadingProgress loadingProgress;
   final InAppWebViewController webViewController;
   final PullToRefreshController pullToRefreshController;
 
   WebViewState({
     required this.url,
     required this.title,
-    this.progress = 0.0,
+    required this.loadingProgress,
     required this.webViewController,
     required this.pullToRefreshController,
   });
 
   WebViewState copyWith({
     WebUri? url,
-    String? title,
-    double? progress,
+    WebViewTabTitle? title,
+    LoadingProgress? loadingProgress,
     InAppWebViewController? webViewController,
     PullToRefreshController? pullToRefreshController,
   }) {
     return WebViewState(
       url: url ?? this.url,
       title: title ?? this.title,
-      progress: progress ?? this.progress,
+      loadingProgress: loadingProgress ?? this.loadingProgress,
       webViewController: webViewController ?? this.webViewController,
       pullToRefreshController: pullToRefreshController ?? this.pullToRefreshController,
     );
@@ -45,11 +56,12 @@ final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewState>> {
   }) {
     // 初期値（必要に応じて調整）
     final initialUrl = WebUri("https://www.google.com");
-    const initialTitle = "Google";
+    const initialTitle = WebViewTabTitle("Google");
 
     final newState = WebViewState(
       url: initialUrl,
       title: initialTitle,
+      loadingProgress: LoadingProgress(0.0),
       webViewController: controller,
       pullToRefreshController: pullToRefreshController,
     );
@@ -60,8 +72,8 @@ final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewState>> {
   // 複数の状態更新を1つのメソッドで行う
   void update({
     WebUri? url,
-    String? title,
-    double? progress,
+    WebViewTabTitle? title,
+    LoadingProgress? loadingProgress,
     InAppWebViewController? webViewController,
     PullToRefreshController? pullToRefreshController,
   }) {
@@ -69,7 +81,7 @@ final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewState>> {
       state = AsyncValue.data(data.copyWith(
         url: url,
         title: title,
-        progress: progress,
+        loadingProgress: loadingProgress,
         webViewController: webViewController,
         pullToRefreshController: pullToRefreshController,
       ));
@@ -78,7 +90,7 @@ final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewState>> {
 
   // 進捗状態のリセット
   void resetProgress() {
-    update(progress: 0.0);
+    update(loadingProgress: LoadingProgress(0.0));
   }
 }
 

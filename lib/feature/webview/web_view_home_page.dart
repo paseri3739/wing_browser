@@ -69,7 +69,7 @@ class _WebViewHomePageState extends ConsumerState<WebViewHomePage> {
       },
       onProgressChanged: (controller, progressPercent) {
         final normalizedProgress = progressPercent / 100.0;
-        webViewNotifier.update(progress: normalizedProgress);
+        webViewNotifier.update(loadingProgress: LoadingProgress(normalizedProgress));
 
         if (progressPercent == 100) {
           pullToRefreshController.endRefreshing();

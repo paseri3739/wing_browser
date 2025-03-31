@@ -36,7 +36,7 @@ class _ReloadButtonState extends ConsumerState<ReloadButton> {
   Widget build(BuildContext context) {
     final asyncState = ref.watch(webViewProvider);
     final progress = asyncState.maybeWhen(
-      data: (data) => data.progress,
+      data: (data) => data.loadingProgress.progress,
       orElse: () => 0,
     );
 

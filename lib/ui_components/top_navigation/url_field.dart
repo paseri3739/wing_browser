@@ -36,7 +36,7 @@ class UrlField extends ConsumerWidget {
       orElse: () => null,
     );
     final progress = asyncState.maybeWhen(
-      data: (data) => data.progress,
+      data: (data) => data.loadingProgress.progress,
       orElse: () => 0.0,
     );
     // TODO: nullableをどうにかする
