@@ -7,7 +7,7 @@ import 'package:wing_browser/ui_components/common/square_icon_button.dart';
 class ReloadButton extends ConsumerStatefulWidget {
   final double height;
   final Color reloadButtonColor;
-  final InAppWebViewController? webViewController;
+  final InAppWebViewController webViewController;
 
   const ReloadButton({
     super.key,
@@ -28,7 +28,7 @@ class _ReloadButtonState extends ConsumerState<ReloadButton> {
       _isLoading = true;
     });
     // リロード実行
-    await widget.webViewController?.reload();
+    await widget.webViewController.reload();
     // リロード直後は、webViewProviderのprogressでロード進捗を監視する
   }
 
