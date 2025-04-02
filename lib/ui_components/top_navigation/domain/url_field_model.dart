@@ -37,8 +37,9 @@ class UrlFieldModel {
     }
   }
 
-  UrlFieldModel onLockButtonPressed() {
-    return this;
+  static UrlFieldModel onLockButtonPressed() {
+    // TODO: ロックボタンの処理を実装する
+    return UrlFieldModel();
   }
 
   UrlFieldModel copyWith({
