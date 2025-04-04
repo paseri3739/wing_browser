@@ -50,7 +50,7 @@ class UrlField extends ConsumerWidget {
     Color iconColor = (url?.scheme == 'https') ? Colors.green : Colors.red;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0), // 上下に8.0のパディングを適用
+      padding: const EdgeInsets.symmetric(vertical: 8.0), // 上下に8.0のパディングを適用 FIXME: マジックナンバー
       child: Column(
         children: [
           Row(
