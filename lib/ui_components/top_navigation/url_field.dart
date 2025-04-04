@@ -28,20 +28,14 @@ class UrlField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final TextEditingController controller = TextEditingController();
-    final asyncState = ref.watch(webViewProvider);
-    final url = asyncState.maybeWhen(
-      data: (data) => data.currentUrl,
-      orElse: () => null,
-    );
-    final progress = asyncState.maybeWhen(
-      data: (data) => data.loadingProgress.progress,
-      orElse: () => 0.0,
-    );
+    final webViewState = ref.watch(webViewStateProvider);
+    final url = webViewState.currentUrl;
+    final progress = webViewState.loadingProgress.progress;
     final theme = Theme.of(context);
     final reloadButtonColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
 
     // URLを反映
-    if (url != null && controller.text != url.toString()) {
+    if (controller.text != url.toString()) {
       controller.text = url.toString();
     }
 
