@@ -69,7 +69,7 @@ class HomePage extends ConsumerWidget {
                 // コントローラが取れるようになったら自動的に上書きして再描画
                 appBarWidget,
                 urlFieldWidget,
-                webViewWidget,
+                webViewWidget, // TODO: Expandedを個々に書き、さらにStackでプログレスを重ねるようにする
               ],
             ),
             overlayWidget,
