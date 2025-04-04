@@ -34,9 +34,7 @@ final defaultWebViewConfig = WebViewConfig(
   initialUrl: "https://www.google.com",
 );
 
-class WebViewConfigNotifier extends StateNotifier<WebViewConfig> {
-  WebViewConfigNotifier() : super(defaultWebViewConfig);
-
+class WebViewConfigNotifier extends Notifier<WebViewConfig> {
   void updateSettings(InAppWebViewSettings newSettings) {
     state = state.copyWith(settings: newSettings);
   }
@@ -48,8 +46,13 @@ class WebViewConfigNotifier extends StateNotifier<WebViewConfig> {
   void updateInitialUrl(String newInitialUrl) {
     state = state.copyWith(initialUrl: newInitialUrl);
   }
+
+  @override
+  WebViewConfig build() {
+    return defaultWebViewConfig;
+  }
 }
 
-final webViewConfigProvider = StateNotifierProvider<WebViewConfigNotifier, WebViewConfig>((ref) {
+final webViewConfigProvider = NotifierProvider<WebViewConfigNotifier, WebViewConfig>(() {
   return WebViewConfigNotifier();
 });
