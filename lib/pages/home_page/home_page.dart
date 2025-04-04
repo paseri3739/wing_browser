@@ -31,8 +31,6 @@ class HomePage extends ConsumerWidget {
       data: (webViewState) {
         // ここは非 nullable な webViewController が取れる
         return BrowserAppBarComponent(
-          // TODO: プロパティとしてバケツリレーせず、single source of truth を守る
-          webViewController: webViewState.webViewController,
           height: screenMetrics.appBarPixel,
         );
       },
@@ -44,7 +42,6 @@ class HomePage extends ConsumerWidget {
       data: (webViewState) {
         return UrlField(
           height: screenMetrics.urlFieldPixel,
-          webViewController: webViewState.webViewController,
         );
       },
       loading: () => SizedBox(height: screenMetrics.urlFieldPixel),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/domain/web_view_model.dart';
 import 'package:wing_browser/ui_components/common/square_icon_button.dart';
@@ -8,12 +7,10 @@ import 'package:wing_browser/ui_components/top_navigation/url_text_field.dart';
 
 class UrlField extends ConsumerWidget {
   final double height; // 高さを指定するプロパティ
-  final InAppWebViewController webViewController;
 
   const UrlField({
     super.key,
     required this.height,
-    required this.webViewController,
   });
 
   // UrlFieldの各要素は更新のタイミングと範囲が同一のためクラスにせず、関数で定義した
