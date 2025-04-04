@@ -57,7 +57,7 @@ class UrlField extends ConsumerWidget {
               ),
             ],
           ),
-          // FIXME: プログレスバーの表示位置を調整
+          // FIXME: プログレスバーの表示位置を調整 親に持ち上げる
           Visibility(visible: progress > 0, child: ProgressBar())
         ],
       ),
