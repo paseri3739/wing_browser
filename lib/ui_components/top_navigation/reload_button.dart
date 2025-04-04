@@ -31,8 +31,8 @@ class ReloadButtonState extends ConsumerState<ReloadButton> {
 
   @override
   Widget build(BuildContext context) {
-    final stateData = ref.watch(webViewStateProvider);
-    final progress = stateData.loadingProgress.progress;
+    final webViewState = ref.watch(webViewStateProvider);
+    final progress = webViewState.loadingProgress.progress;
 
     // 進捗が完了している場合は、ローディング状態を解除
     if (progress >= 1.0 && _isLoading) {
