@@ -28,6 +28,9 @@ final class WebViewModel {
     required this.pullToRefreshController,
   });
 
+  // progress が 0.0 でない場合は true を返す getter を追加
+  bool get isLoading => loadingProgress.progress != 0.0;
+
   WebViewModel copyWith({
     WebUri? url,
     WebViewTabTitle? title,

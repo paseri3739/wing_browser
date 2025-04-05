@@ -7,9 +7,10 @@ class ProgressBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final progress = ref.watch(webViewStateProvider).loadingProgress.progress;
+    final webViewState = ref.watch(webViewStateProvider);
+    final progress = webViewState.loadingProgress.progress;
     return Visibility(
-        visible: progress > 0,
+        visible: webViewState.isLoading,
         child: LinearProgressIndicator(
           value: progress,
           backgroundColor: Colors.white,

@@ -27,12 +27,11 @@ class ReloadButtonState extends ConsumerState<ReloadButton> {
   @override
   Widget build(BuildContext context) {
     final webViewState = ref.watch(webViewStateProvider);
-    final progress = webViewState.loadingProgress.progress;
 
     return SquareIconButton(
       height: widget.height,
       // ローディング中はXアイコン、通常はリフレッシュアイコンを表示
-      icon: progress != 0.0 ? Icons.close : Icons.refresh,
+      icon: webViewState.isLoading ? Icons.close : Icons.refresh,
       color: widget.reloadButtonColor,
       onPressed: _onPressed,
     );
