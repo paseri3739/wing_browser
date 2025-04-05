@@ -19,7 +19,7 @@ class UrlFieldModel {
       final uri = Uri.parse(string);
 
       final correctedUri = uri.scheme.isEmpty
-          ? WebUri("http://$string") // HTTP をデフォルトとする
+          ? WebUri("http://$string") // HTTP をデフォルトとする -> HTTPSが使える場合は勝手にHTTPSに変わる
           : WebUri(string);
 
       await webViewController.loadUrl(
