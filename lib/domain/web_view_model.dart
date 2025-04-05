@@ -36,8 +36,8 @@ final class WebViewModel {
     PullToRefreshController? pullToRefreshController,
   }) {
     return WebViewModel(
-      currentUrl: url ?? this.currentUrl,
-      currentTabTitle: title ?? this.currentTabTitle,
+      currentUrl: url ?? currentUrl,
+      currentTabTitle: title ?? currentTabTitle,
       loadingProgress: loadingProgress ?? this.loadingProgress,
       webViewController: webViewController ?? this.webViewController,
       pullToRefreshController: pullToRefreshController ?? this.pullToRefreshController,

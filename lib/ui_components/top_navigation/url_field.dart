@@ -29,7 +29,6 @@ class UrlField extends ConsumerWidget {
     final TextEditingController controller = TextEditingController();
     final webViewState = ref.watch(webViewStateProvider);
     final url = webViewState.currentUrl;
-    final progress = webViewState.loadingProgress.progress;
     final theme = Theme.of(context);
     final reloadButtonColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
 
@@ -56,8 +55,6 @@ class UrlField extends ConsumerWidget {
               ),
             ],
           ),
-          // FIXME: プログレスバーの表示位置を調整 親に持ち上げる
-          // Visibility(visible: progress > 0, child: ProgressBar())
         ],
       ),
     );
