@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/domain/web_view_model.dart';
-import 'package:wing_browser/ui_components/common/square_icon_button.dart';
+import 'package:wing_browser/ui_components/top_navigation/lock_button.dart';
 import 'package:wing_browser/ui_components/top_navigation/reload_button.dart';
 import 'package:wing_browser/ui_components/top_navigation/url_text_field.dart';
 
@@ -12,17 +12,6 @@ class UrlField extends ConsumerWidget {
     super.key,
     required this.height,
   });
-
-  // UrlFieldの各要素は更新のタイミングと範囲が同一のためクラスにせず、関数で定義した
-  SquareIconButton _buildLockButton(IconData icon, Color color, double height, WidgetRef ref) {
-    return SquareIconButton(
-      height: height,
-      icon: icon,
-      color: color,
-      // TODO: ロックアイコンの処理を追加
-      onPressed: () {},
-    );
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,7 +36,11 @@ class UrlField extends ConsumerWidget {
         children: [
           Row(
             children: <Widget>[
-              _buildLockButton(lockIcon, iconColor, height, ref),
+              LockButton(
+                height: height,
+                icon: lockIcon,
+                color: iconColor,
+              ),
               UrlTextField(controller: controller, height: height),
               ReloadButton(
                 height: height,
