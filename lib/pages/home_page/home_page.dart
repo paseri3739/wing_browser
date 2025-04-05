@@ -6,6 +6,7 @@ import 'package:wing_browser/pages/home_page/style/screen_metrics.dart';
 import 'package:wing_browser/ui_components/bottom_navigation/bottom_app_bar.dart';
 import 'package:wing_browser/ui_components/bottom_navigation/search_button.dart';
 import 'package:wing_browser/ui_components/top_navigation/browser_app_bar_component.dart';
+import 'package:wing_browser/ui_components/top_navigation/progress_bar.dart';
 import 'package:wing_browser/ui_components/top_navigation/url_field.dart';
 
 class HomePage extends ConsumerWidget {
@@ -22,7 +23,6 @@ class HomePage extends ConsumerWidget {
 
     // WebView は常にビルドし、onWebViewCreated などを走らせる
     // -> コントローラが取得できたら provider 側が `AsyncData` に遷移する
-    final webViewWidget = const Expanded(child: WebViewHomePage());
 
     // 非 nullable なコントローラを必要とするウィジェットは、
     // WebViewAsyncValue の状態に応じて切り替える
@@ -55,6 +55,14 @@ class HomePage extends ConsumerWidget {
       data: (_) => const SizedBox.shrink(),
     );
 
+    final progressWidget = webViewAsyncValue.when(
+      data: (webViewState) {
+        return const ProgressBar();
+      },
+      loading: () => const SizedBox.shrink(),
+      error: (error, stack) => const SizedBox.shrink(),
+    );
+
     return SafeArea(
       top: true,
       bottom: true,
@@ -69,7 +77,7 @@ class HomePage extends ConsumerWidget {
                 // コントローラが取れるようになったら自動的に上書きして再描画
                 appBarWidget,
                 urlFieldWidget,
-                webViewWidget, // TODO: Expandedをここに書き、さらにStackでプログレスを重ねるようにする
+                Expanded(child: Stack(children: [WebViewHomePage(), progressWidget])),
               ],
             ),
             overlayWidget,

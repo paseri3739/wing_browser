@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/domain/web_view_model.dart';
 import 'package:wing_browser/ui_components/common/square_icon_button.dart';
-import 'package:wing_browser/ui_components/top_navigation/progress_bar.dart';
 import 'package:wing_browser/ui_components/top_navigation/reload_button.dart';
 import 'package:wing_browser/ui_components/top_navigation/url_text_field.dart';
 
@@ -58,7 +57,7 @@ class UrlField extends ConsumerWidget {
             ],
           ),
           // FIXME: プログレスバーの表示位置を調整 親に持ち上げる
-          Visibility(visible: progress > 0, child: ProgressBar())
+          // Visibility(visible: progress > 0, child: ProgressBar())
         ],
       ),
     );

@@ -8,9 +8,11 @@ class ProgressBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final progress = ref.watch(webViewStateProvider).loadingProgress.progress;
-    return LinearProgressIndicator(
-      value: progress,
-      backgroundColor: Colors.white,
-    );
+    return Visibility(
+        visible: progress > 0,
+        child: LinearProgressIndicator(
+          value: progress,
+          backgroundColor: Colors.white,
+        ));
   }
 }
