@@ -20,6 +20,9 @@ class UrlTextField extends ConsumerWidget {
       child: SizedBox(
         height: height,
         child: TextField(
+          onTapOutside: (_) {
+            FocusScope.of(context).unfocus();
+          },
           controller: controller,
           textAlign: TextAlign.center,
           onSubmitted: (string) async {
