@@ -5,6 +5,8 @@
 		<key>NSAppTransportSecurity</key>
 		<dict>
 			<key>NSAllowsArbitraryLoads</key><true/>
+			<!-- WebView 内のロードにも例外を適用 -->
+			<key>NSAllowsArbitraryLoadsInWebContent</key><true/>
 		</dict>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>

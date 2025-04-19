@@ -44,6 +44,7 @@ class WebViewHomePage extends ConsumerWidget {
         }
       },
       onReceivedError: (controller, request, error) {
+        debugPrint('WebViewError code=${error.type} description=${error.description}');
         pullToRefreshController.endRefreshing();
       },
       onProgressChanged: (controller, progressPercent) {
@@ -60,6 +61,11 @@ class WebViewHomePage extends ConsumerWidget {
       },
       shouldOverrideUrlLoading: (controller, action) async {
         return NavigationActionPolicy.ALLOW;
+      },
+      onReceivedServerTrustAuthRequest: (controller, challenge) async {
+        return ServerTrustAuthResponse(
+          action: ServerTrustAuthResponseAction.PROCEED,
+        );
       },
     );
   }
