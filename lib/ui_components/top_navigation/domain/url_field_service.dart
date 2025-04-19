@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/web_view_model.dart';
 
-// URLバーのドメインモデル。これをriverpod経由で公開しDIする。
+// URLバーのサービス。
 class UrlFieldService {
   // null許容しない
   static Future<void> onSubmitted(
