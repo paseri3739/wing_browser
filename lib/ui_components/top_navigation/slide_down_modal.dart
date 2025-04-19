@@ -103,56 +103,66 @@ class _SlideDownContentState extends State<_SlideDownContent> with SingleTickerP
   Widget build(BuildContext context) {
     return Material(
       color: Colors.black54, // 背景の暗い半透明
-      child: GestureDetector(
-        onTap: _close, // 背景タップで閉じる
-        child: Stack(
-          children: [
-            SlideTransition(
-              position: _animation,
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: SafeArea(
-                  child: Container(
-                    height: 200,
-                    width: double.infinity,
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // URL表示（カラー付き）
-                              SizedBox(
-                                width: double.infinity,
-                                child: Text.rich(
-                                  _colorizeUrl(widget.ref.read(webViewStateProvider).currentUrl.toString()),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                ),
+      child: Stack(
+        children: [
+          // グレーアウト背景（タップで閉じる）
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: _close,
+              behavior: HitTestBehavior.translucent, // 透明な所もヒットさせる
+              child: Container(
+                color: Colors.transparent, // ← 背景色はここで十分
+              ),
+            ),
+          ),
+
+          // 上からスライドする白いモーダル本体（タップしても閉じない）
+          SlideTransition(
+            position: _animation,
+            child: GestureDetector(
+              // 子ウィジェットにイベントを委ね、ここで消費する
+              behavior: HitTestBehavior.deferToChild,
+              onTap: () {}, // 何もしない＝背景に届かない
+              child: SafeArea(
+                child: Container(
+                  height: 200,
+                  width: double.infinity,
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // URL 部分（https は緑、http は赤）
+                            Text.rich(
+                              _colorizeUrl(
+                                widget.ref.read(webViewStateProvider).currentUrl.toString(),
                               ),
-
-                              const SizedBox(height: 8),
-
-                              // 接続の安全性表示
-                              _buildSecurityLabel(widget.ref.read(webViewStateProvider).currentUrl.toString()),
-                            ],
-                          ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: false,
+                            ),
+                            const SizedBox(height: 8),
+                            // 接続保護ラベル
+                            _buildSecurityLabel(
+                              widget.ref.read(webViewStateProvider).currentUrl.toString(),
+                            ),
+                          ],
                         ),
-                        ElevatedButton(
-                          onPressed: _close,
-                          child: Text("閉じる"),
-                        ),
-                      ],
-                    ),
+                      ),
+                      ElevatedButton(
+                        onPressed: _close,
+                        child: const Text('閉じる'),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
