@@ -1,6 +1,8 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "cmake.sourceDirectory": "/Users/masato/Documents/Wing_Browser/linux",
-    "cSpell.words": ["inappwebview"],
-    "dart.flutterSdkPath": ".fvm/versions/3.27.1"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "cmake.sourceDirectory": "/Users/masato/Documents/Wing_Browser/linux",
+  "cSpell.words": [
+    "inappwebview"
+  ],
+  "dart.flutterSdkPath": ".fvm/versions/3.29.3"
 }

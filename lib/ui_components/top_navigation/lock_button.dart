@@ -7,8 +7,9 @@ class LockButton extends ConsumerStatefulWidget {
   final double height;
   final IconData icon;
   final Color color;
+  bool isShowingModalInProgress = false;
 
-  const LockButton({
+  LockButton({
     super.key,
     required this.height,
     required this.icon,
@@ -28,8 +29,15 @@ class LockButtonState extends ConsumerState<LockButton> {
       height: widget.height,
       icon: widget.icon,
       color: widget.color,
-      onPressed: () {
-        SlideDownModal.show(context, ref);
+      onPressed: () async {
+        if (widget.isShowingModalInProgress) {
+          return;
+        }
+        widget.isShowingModalInProgress = true;
+        // Show the modal
+        await SlideDownModal.show(context, ref);
+
+        widget.isShowingModalInProgress = false;
       },
     );
   }

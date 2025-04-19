@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/domain/web_view_model.dart';
 
 class SlideDownModal {
-  static void show(BuildContext context, WidgetRef ref) {
+  static Future<void> show(BuildContext context, WidgetRef ref) async {
     final overlay = Overlay.of(context);
     late final OverlayEntry overlayEntry;
 
