@@ -66,20 +66,23 @@ class _SlideDownContentState extends State<_SlideDownContent> with SingleTickerP
               position: _animation,
               child: Align(
                 alignment: Alignment.topCenter,
-                child: Container(
-                  height: 300,
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text('上から出てくるモーダル'),
-                      ),
-                      ElevatedButton(
-                        onPressed: _close,
-                        child: Text("閉じる"),
-                      ),
-                    ],
+                child: SafeArea(
+                  child: Container(
+                    height: 200,
+                    width: double.infinity,
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text('上から出てくるモーダル'),
+                        ),
+                        ElevatedButton(
+                          onPressed: _close,
+                          child: Text("閉じる"),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
