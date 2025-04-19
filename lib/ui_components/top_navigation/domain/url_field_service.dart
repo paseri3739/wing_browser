@@ -6,12 +6,6 @@ import '../../../domain/web_view_model.dart';
 
 // URLバーのドメインモデル。これをriverpod経由で公開しDIする。
 class UrlFieldService {
-  final bool isLoading;
-
-  UrlFieldService({
-    this.isLoading = false,
-  });
-
   // null許容しない
   static Future<void> onSubmitted(
       String string, InAppWebViewController webViewController, WidgetRef ref, BuildContext context) async {
@@ -40,13 +34,5 @@ class UrlFieldService {
   static UrlFieldService onLockButtonPressed() {
     // TODO: ロックボタンの処理を実装する
     return UrlFieldService();
-  }
-
-  UrlFieldService copyWith({
-    bool? isLoading,
-  }) {
-    return UrlFieldService(
-      isLoading: isLoading ?? this.isLoading,
-    );
   }
 }
