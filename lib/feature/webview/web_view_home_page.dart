@@ -58,6 +58,9 @@ class WebViewHomePage extends ConsumerWidget {
           webViewNotifier.resetProgress();
         }
       },
+      shouldOverrideUrlLoading: (controller, action) async {
+        return NavigationActionPolicy.ALLOW;
+      },
     );
   }
 }

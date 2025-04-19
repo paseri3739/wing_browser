@@ -19,7 +19,7 @@ abstract class WebViewConfig with _$WebViewConfig {
 final defaultWebViewConfig = WebViewConfig(
   settings: InAppWebViewSettings(isInspectable: kDebugMode),
   pullToRefreshSettings: PullToRefreshSettings(color: Colors.blue),
-  initialUrl: "https://www.google.com",
+  initialUrl: "https://www.google.co.jp",
 );
 
 class WebViewConfigNotifier extends Notifier<WebViewConfig> {
