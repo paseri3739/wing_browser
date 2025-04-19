@@ -37,6 +37,7 @@ class BrowserAppBarComponent extends ConsumerWidget implements PreferredSizeWidg
           final List<Favicon> favicons =
               snapshot.hasData && snapshot.data![1] is List<Favicon> ? List<Favicon>.from(snapshot.data![1]) : [];
 
+          // TODO: Riverpodで管理する。nullを取り扱わない。
           final faviconUrl = favicons.isNotEmpty ? favicons.first.url.toString() : null;
 
           return Container(
