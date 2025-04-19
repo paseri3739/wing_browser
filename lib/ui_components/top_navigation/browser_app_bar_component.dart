@@ -26,6 +26,7 @@ class BrowserAppBarComponent extends ConsumerWidget implements PreferredSizeWidg
           controller.getFavicons(),
         ]),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+          // TODO: Riverpodに移管する。
           final title = switch (snapshot.connectionState) {
             ConnectionState.waiting => 'Loading...',
             ConnectionState.done when snapshot.hasError => 'Error',
