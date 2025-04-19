@@ -29,7 +29,7 @@ class LockButtonState extends ConsumerState<LockButton> {
       icon: widget.icon,
       color: widget.color,
       onPressed: () {
-        SlideDownModal.show(context);
+        SlideDownModal.show(context, ref);
       },
     );
   }

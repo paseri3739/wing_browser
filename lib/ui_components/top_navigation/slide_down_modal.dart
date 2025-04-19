@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wing_browser/domain/web_view_model.dart';
 
 class SlideDownModal {
-  static void show(BuildContext context) {
+  static void show(BuildContext context, WidgetRef ref) {
     final overlay = Overlay.of(context);
     late final OverlayEntry overlayEntry;
 
     overlayEntry = OverlayEntry(
       builder: (context) => _SlideDownContent(
         onClose: () => overlayEntry.remove(),
+        ref: ref,
       ),
     );
 
@@ -17,8 +20,9 @@ class SlideDownModal {
 
 class _SlideDownContent extends StatefulWidget {
   final VoidCallback onClose;
+  final WidgetRef ref;
 
-  const _SlideDownContent({required this.onClose});
+  const _SlideDownContent({required this.onClose, required this.ref});
 
   @override
   State<_SlideDownContent> createState() => _SlideDownContentState();
@@ -54,6 +58,34 @@ class _SlideDownContentState extends State<_SlideDownContent> with SingleTickerP
     widget.onClose();
   }
 
+  TextSpan _colorizeUrl(String url) {
+    final match = RegExp(r'^(https?)').firstMatch(url);
+
+    if (match != null) {
+      final scheme = match.group(0)!;
+      final rest = url.substring(scheme.length);
+
+      return TextSpan(
+        children: [
+          TextSpan(
+            text: scheme,
+            style: TextStyle(
+              color: scheme == 'https' ? Colors.green : Colors.red,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          TextSpan(
+            text: rest,
+            style: TextStyle(color: Colors.black),
+          ),
+        ],
+      );
+    }
+
+    // マッチしなかった場合はそのまま黒文字で表示
+    return TextSpan(text: url, style: TextStyle(color: Colors.black));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -74,9 +106,13 @@ class _SlideDownContentState extends State<_SlideDownContent> with SingleTickerP
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text('上から出てくるモーダル'),
-                        ),
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text.rich(
+                              _colorizeUrl(widget.ref.read(webViewStateProvider).currentUrl.toString()),
+                              overflow: TextOverflow.ellipsis, // 省略表示（...）
+                              maxLines: 2, // 1行で制限
+                              softWrap: false, // 折り返さない
+                            )),
                         ElevatedButton(
                           onPressed: _close,
                           child: Text("閉じる"),
