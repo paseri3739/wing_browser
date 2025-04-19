@@ -46,6 +46,10 @@ class WebViewHomePage extends ConsumerWidget {
       onReceivedError: (controller, request, error) {
         debugPrint('WebViewError code=${error.type} description=${error.description}');
         pullToRefreshController.endRefreshing();
+        controller.stopLoading();
+        webViewNotifier.update(
+          loadingProgress: LoadingProgress(0.0), // プログレスバーの表示をリセットするために必須
+        );
       },
       onProgressChanged: (controller, progressPercent) {
         final normalizedProgress = progressPercent / 100.0;
