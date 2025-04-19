@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/domain/web_view_model.dart';
-import 'package:wing_browser/ui_components/top_navigation/domain/url_field_model.dart';
+import 'package:wing_browser/ui_components/top_navigation/domain/url_field_service.dart';
 
 class UrlTextField extends ConsumerWidget {
   final TextEditingController controller;
@@ -24,7 +24,7 @@ class UrlTextField extends ConsumerWidget {
           textAlign: TextAlign.center,
           onSubmitted: (string) async {
             // nullを排除しているのでそのまま使える
-            await UrlFieldModel.onSubmitted(string, webViewController, ref, context);
+            await UrlFieldService.onSubmitted(string, webViewController, ref, context);
           },
           textInputAction: TextInputAction.go,
           decoration: InputDecoration(

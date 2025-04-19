@@ -5,10 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/web_view_model.dart';
 
 // URLバーのドメインモデル。これをriverpod経由で公開しDIする。
-class UrlFieldModel {
+class UrlFieldService {
   final bool isLoading;
 
-  UrlFieldModel({
+  UrlFieldService({
     this.isLoading = false,
   });
 
@@ -37,15 +37,15 @@ class UrlFieldModel {
     }
   }
 
-  static UrlFieldModel onLockButtonPressed() {
+  static UrlFieldService onLockButtonPressed() {
     // TODO: ロックボタンの処理を実装する
-    return UrlFieldModel();
+    return UrlFieldService();
   }
 
-  UrlFieldModel copyWith({
+  UrlFieldService copyWith({
     bool? isLoading,
   }) {
-    return UrlFieldModel(
+    return UrlFieldService(
       isLoading: isLoading ?? this.isLoading,
     );
   }
