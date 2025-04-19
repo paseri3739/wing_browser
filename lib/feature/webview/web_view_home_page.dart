@@ -44,11 +44,31 @@ class WebViewHomePage extends ConsumerWidget {
         }
       },
       onReceivedError: (controller, request, error) {
-        debugPrint('WebViewError code=${error.type} description=${error.description}');
+        debugPrint('🛑 WebViewError');
+        debugPrint('  ▶️ URL: ${request.url}');
+        debugPrint('  ▶️ Method: ${request.method}');
+        debugPrint('  ▶️ Headers: ${request.headers}');
+        debugPrint('  ▶️ Is main frame: ${request.isForMainFrame}');
+        debugPrint('  ▶️ Error type: ${error.type}');
+        debugPrint('  ▶️ Description: ${error.description}');
         pullToRefreshController.endRefreshing();
         controller.stopLoading();
         webViewNotifier.update(
-          loadingProgress: LoadingProgress(0.0), // プログレスバーの表示をリセットするために必須
+          loadingProgress: LoadingProgress(0.0),
+        );
+      },
+      onReceivedHttpError: (controller, request, error) {
+        debugPrint('🛑 WebViewHttpError');
+        debugPrint('  ▶️ URL: ${request.url}');
+        debugPrint('  ▶️ Method: ${request.method}');
+        debugPrint('  ▶️ Headers: ${request.headers}');
+        debugPrint('  ▶️ Is main frame: ${request.isForMainFrame}');
+        debugPrint('  ▶️ Status code: ${error.statusCode}');
+        debugPrint('  ▶️ Description: ${error.reasonPhrase}');
+        pullToRefreshController.endRefreshing();
+        controller.stopLoading();
+        webViewNotifier.update(
+          loadingProgress: LoadingProgress(0.0),
         );
       },
       onProgressChanged: (controller, progressPercent) {
@@ -67,6 +87,7 @@ class WebViewHomePage extends ConsumerWidget {
         return NavigationActionPolicy.ALLOW;
       },
       onReceivedServerTrustAuthRequest: (controller, challenge) async {
+        debugPrint('🧾 ServerTrustAuthRequest: ${challenge.toJson()}');
         return ServerTrustAuthResponse(
           action: ServerTrustAuthResponseAction.PROCEED,
         );

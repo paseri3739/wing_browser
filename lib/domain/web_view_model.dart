@@ -58,7 +58,7 @@ final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewModel>> {
     required PullToRefreshController pullToRefreshController,
   }) {
     // 初期値（必要に応じて調整）
-    final initialUrl = WebUri("https://www.google.com");
+    final initialUrl = WebUri("https://www.google.co.jp"); // FIXME: 設定がモデルと重複してる
     const initialTitle = WebViewTabTitle("Google");
 
     final newState = WebViewModel(
