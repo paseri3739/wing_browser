@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/domain/web_view_model.dart';
 
@@ -133,24 +134,29 @@ class _SlideDownContentState extends State<_SlideDownContent> with SingleTickerP
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // URL 部分（https は緑、http は赤）
-                            Text.rich(
-                              _colorizeUrl(
-                                widget.ref.read(webViewStateProvider).webViewController.getUrl().toString(),
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              softWrap: false,
-                            ),
-                            const SizedBox(height: 8),
-                            // 接続保護ラベル
-                            _buildSecurityLabel(
-                              widget.ref.read(webViewStateProvider).webViewController.getUrl().toString(),
-                            ),
-                          ],
+                        child: FutureBuilder<WebUri?>(
+                          future: widget.ref.read(webViewStateProvider).webViewController.getUrl(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const CircularProgressIndicator();
+                            }
+
+                            final url = snapshot.data.toString();
+
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text.rich(
+                                  _colorizeUrl(url),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                ),
+                                const SizedBox(height: 8),
+                                _buildSecurityLabel(url),
+                              ],
+                            );
+                          },
                         ),
                       ),
                       ElevatedButton(
