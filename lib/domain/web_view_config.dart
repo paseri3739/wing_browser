@@ -3,29 +3,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class WebViewConfig {
-  final InAppWebViewSettings settings;
-  final PullToRefreshSettings pullToRefreshSettings;
-  final String initialUrl;
+part 'web_view_config.freezed.dart';
 
-  const WebViewConfig({
-    required this.settings,
-    required this.pullToRefreshSettings,
-    required this.initialUrl,
-  });
-
-  WebViewConfig copyWith({
-    InAppWebViewSettings? settings,
-    PullToRefreshSettings? pullToRefreshSettings,
-    String? initialUrl,
-  }) {
-    return WebViewConfig(
-      settings: settings ?? this.settings,
-      pullToRefreshSettings: pullToRefreshSettings ?? this.pullToRefreshSettings,
-      initialUrl: initialUrl ?? this.initialUrl,
-    );
-  }
+@freezed
+abstract class WebViewConfig with _$WebViewConfig {
+  const factory WebViewConfig({
+    required InAppWebViewSettings settings,
+    required PullToRefreshSettings pullToRefreshSettings,
+    required String initialUrl,
+  }) = _WebViewConfig;
 }
 
 final defaultWebViewConfig = WebViewConfig(
