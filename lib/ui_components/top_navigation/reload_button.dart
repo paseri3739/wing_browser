@@ -21,6 +21,13 @@ class ReloadButtonState extends ConsumerState<ReloadButton> {
   Future<void> _onPressed() async {
     // リロード実行
     final webViewState = ref.read(webViewStateProvider);
+    final webViewNotifier = ref.read(webViewProvider.notifier);
+    if (webViewState.isLoading) {
+      // ローディング中はリロードをキャンセル
+      webViewState.webViewController.stopLoading();
+      webViewNotifier.update(loadingProgress: LoadingProgress(0.0));
+      return;
+    }
     await webViewState.webViewController.reload(); // プログレスをプログレスバーのウィジェットが監視することでUIが変更される。
   }
 
