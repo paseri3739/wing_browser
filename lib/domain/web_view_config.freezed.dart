@@ -17,7 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$WebViewConfig implements DiagnosticableTreeMixin {
   InAppWebViewSettings get settings;
   PullToRefreshSettings get pullToRefreshSettings;
-  String get initialUrl;
+  WebUri get initialUrl;
 
   /// Create a copy of WebViewConfig
   /// with the given fields replaced by the non-null parameter values.
@@ -68,7 +68,7 @@ abstract mixin class $WebViewConfigCopyWith<$Res> {
   $Res call(
       {InAppWebViewSettings settings,
       PullToRefreshSettings pullToRefreshSettings,
-      String initialUrl});
+      WebUri initialUrl});
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class _$WebViewConfigCopyWithImpl<$Res>
       initialUrl: null == initialUrl
           ? _self.initialUrl
           : initialUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as WebUri,
     ));
   }
 }
@@ -118,7 +118,7 @@ class _WebViewConfig with DiagnosticableTreeMixin implements WebViewConfig {
   @override
   final PullToRefreshSettings pullToRefreshSettings;
   @override
-  final String initialUrl;
+  final WebUri initialUrl;
 
   /// Create a copy of WebViewConfig
   /// with the given fields replaced by the non-null parameter values.
@@ -171,7 +171,7 @@ abstract mixin class _$WebViewConfigCopyWith<$Res>
   $Res call(
       {InAppWebViewSettings settings,
       PullToRefreshSettings pullToRefreshSettings,
-      String initialUrl});
+      WebUri initialUrl});
 }
 
 /// @nodoc
@@ -203,7 +203,7 @@ class __$WebViewConfigCopyWithImpl<$Res>
       initialUrl: null == initialUrl
           ? _self.initialUrl
           : initialUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as WebUri,
     ));
   }
 }

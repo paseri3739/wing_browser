@@ -14,14 +14,12 @@ final class LoadingProgress {
 
 // WebViewの状態クラス
 final class WebViewModel {
-  final WebUri currentUrl;
   final WebViewTabTitle currentTabTitle;
   final LoadingProgress loadingProgress;
   final InAppWebViewController webViewController;
   final PullToRefreshController pullToRefreshController;
 
   WebViewModel({
-    required this.currentUrl,
     required this.currentTabTitle,
     required this.loadingProgress,
     required this.webViewController,
@@ -39,7 +37,6 @@ final class WebViewModel {
     PullToRefreshController? pullToRefreshController,
   }) {
     return WebViewModel(
-      currentUrl: url ?? currentUrl,
       currentTabTitle: title ?? currentTabTitle,
       loadingProgress: loadingProgress ?? this.loadingProgress,
       webViewController: webViewController ?? this.webViewController,
@@ -58,11 +55,9 @@ final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewModel>> {
     required PullToRefreshController pullToRefreshController,
   }) {
     // 初期値（必要に応じて調整）
-    final initialUrl = WebUri("https://www.google.co.jp"); // FIXME: 設定がモデルと重複してる
     const initialTitle = WebViewTabTitle("Google");
 
     final newState = WebViewModel(
-      currentUrl: initialUrl,
       currentTabTitle: initialTitle,
       loadingProgress: LoadingProgress(0.0),
       webViewController: controller,

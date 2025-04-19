@@ -139,7 +139,7 @@ class _SlideDownContentState extends State<_SlideDownContent> with SingleTickerP
                             // URL 部分（https は緑、http は赤）
                             Text.rich(
                               _colorizeUrl(
-                                widget.ref.read(webViewStateProvider).currentUrl.toString(),
+                                widget.ref.read(webViewStateProvider).webViewController.getUrl().toString(),
                               ),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
@@ -148,7 +148,7 @@ class _SlideDownContentState extends State<_SlideDownContent> with SingleTickerP
                             const SizedBox(height: 8),
                             // 接続保護ラベル
                             _buildSecurityLabel(
-                              widget.ref.read(webViewStateProvider).currentUrl.toString(),
+                              widget.ref.read(webViewStateProvider).webViewController.getUrl().toString(),
                             ),
                           ],
                         ),

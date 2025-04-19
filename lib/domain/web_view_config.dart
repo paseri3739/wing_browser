@@ -12,14 +12,14 @@ abstract class WebViewConfig with _$WebViewConfig {
   const factory WebViewConfig({
     required InAppWebViewSettings settings,
     required PullToRefreshSettings pullToRefreshSettings,
-    required String initialUrl,
+    required WebUri initialUrl,
   }) = _WebViewConfig;
 }
 
 final defaultWebViewConfig = WebViewConfig(
   settings: InAppWebViewSettings(isInspectable: kDebugMode),
   pullToRefreshSettings: PullToRefreshSettings(color: Colors.blue),
-  initialUrl: "https://www.google.co.jp",
+  initialUrl: WebUri("https://www.google.co.jp"),
 );
 
 class WebViewConfigNotifier extends Notifier<WebViewConfig> {
@@ -32,7 +32,7 @@ class WebViewConfigNotifier extends Notifier<WebViewConfig> {
   }
 
   void updateInitialUrl(String newInitialUrl) {
-    state = state.copyWith(initialUrl: newInitialUrl);
+    state = state.copyWith(initialUrl: WebUri(newInitialUrl));
   }
 
   @override

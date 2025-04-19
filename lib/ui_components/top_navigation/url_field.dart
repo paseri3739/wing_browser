@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wing_browser/domain/web_view_model.dart';
 import 'package:wing_browser/ui_components/top_navigation/lock_button.dart';
@@ -6,7 +7,7 @@ import 'package:wing_browser/ui_components/top_navigation/reload_button.dart';
 import 'package:wing_browser/ui_components/top_navigation/url_text_field.dart';
 
 class UrlField extends ConsumerWidget {
-  final double height; // 高さを指定するプロパティ
+  final double height;
 
   const UrlField({
     super.key,
@@ -15,43 +16,46 @@ class UrlField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextEditingController controller = TextEditingController();
-    final webViewState = ref.watch(webViewStateProvider);
-    final url = webViewState.currentUrl;
+    final webViewController = ref.watch(webViewStateProvider).webViewController;
     final theme = Theme.of(context);
     final reloadButtonColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+    final controller = TextEditingController();
 
-    // URLを反映
-    if (controller.text != url.toString()) {
-      controller.text = url.toString();
-    }
+    return FutureBuilder<WebUri?>(
+      future: webViewController.getUrl(),
+      builder: (context, snapshot) {
+        final url = snapshot.data;
+        final scheme = url?.scheme ?? '';
 
-    // アイコンを動的に設定
-    IconData lockIcon = (url.scheme == 'https') ? Icons.lock : Icons.lock_open;
-    Color iconColor = (url.scheme == 'https') ? Colors.green : Colors.red;
+        // 入力欄にURLを反映（WebViewのURLと異なるときのみ）
+        if (url != null && controller.text != url.toString()) {
+          controller.text = url.toString();
+        }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0), // 上下に8.0のパディングを適用 FIXME: マジックナンバー
-      child: Column(
-        children: [
-          Row(
+        final IconData lockIcon = scheme == 'https' ? Icons.lock : Icons.lock_open;
+        final Color iconColor = scheme == 'https' ? Colors.green : Colors.red;
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0), // FIXME: マジックナンバー
+          child: Row(
             children: <Widget>[
               LockButton(
                 height: height,
                 icon: lockIcon,
                 color: iconColor,
               ),
-              UrlTextField(controller: controller, height: height),
+              UrlTextField(
+                controller: controller,
+                height: height,
+              ),
               ReloadButton(
                 height: height,
                 reloadButtonColor: reloadButtonColor,
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
-
-// リロードボタンをタップした際、ロード完了までアイコンがXに変わるように実装したConsumerStatefulWidget

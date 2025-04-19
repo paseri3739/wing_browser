@@ -27,7 +27,7 @@ class WebViewHomePage extends ConsumerWidget {
 
     return InAppWebView(
       // 設定情報を利用して初期URLと設定を渡す
-      initialUrlRequest: URLRequest(url: WebUri(config.initialUrl)),
+      initialUrlRequest: URLRequest(url: config.initialUrl),
       initialSettings: config.settings,
       pullToRefreshController: pullToRefreshController,
       onWebViewCreated: (controller) {
