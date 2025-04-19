@@ -30,9 +30,4 @@ class UrlFieldService {
       }
     }
   }
-
-  static UrlFieldService onLockButtonPressed() {
-    // TODO: ロックボタンの処理を実装する
-    return UrlFieldService();
-  }
 }
