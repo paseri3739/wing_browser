@@ -86,6 +86,19 @@ class _SlideDownContentState extends State<_SlideDownContent> with SingleTickerP
     return TextSpan(text: url, style: TextStyle(color: Colors.black));
   }
 
+  Widget _buildSecurityLabel(String url) {
+    final isSecure = url.startsWith('https');
+
+    return Text(
+      isSecure ? '接続は保護されています' : '接続は保護されていません',
+      style: TextStyle(
+        color: isSecure ? Colors.green : Colors.red,
+        fontWeight: FontWeight.w600,
+        fontSize: 12,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -106,13 +119,28 @@ class _SlideDownContentState extends State<_SlideDownContent> with SingleTickerP
                     child: Column(
                       children: [
                         Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text.rich(
-                              _colorizeUrl(widget.ref.read(webViewStateProvider).currentUrl.toString()),
-                              overflow: TextOverflow.ellipsis, // 省略表示（...）
-                              maxLines: 2, // 1行で制限
-                              softWrap: false, // 折り返さない
-                            )),
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // URL表示（カラー付き）
+                              SizedBox(
+                                width: double.infinity,
+                                child: Text.rich(
+                                  _colorizeUrl(widget.ref.read(webViewStateProvider).currentUrl.toString()),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                ),
+                              ),
+
+                              const SizedBox(height: 8),
+
+                              // 接続の安全性表示
+                              _buildSecurityLabel(widget.ref.read(webViewStateProvider).currentUrl.toString()),
+                            ],
+                          ),
+                        ),
                         ElevatedButton(
                           onPressed: _close,
                           child: Text("閉じる"),
