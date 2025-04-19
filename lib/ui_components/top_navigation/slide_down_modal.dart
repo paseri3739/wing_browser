@@ -15,6 +15,7 @@ class SlideDownModal {
     );
 
     overlay.insert(overlayEntry);
+    return;
   }
 }
 
