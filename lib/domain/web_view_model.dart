@@ -9,6 +9,7 @@ final class WebViewTabTitle {
 
 final class LoadingProgress {
   final double progress;
+  bool get isLoading => progress != 0.0;
   const LoadingProgress(this.progress);
 }
 
@@ -27,7 +28,7 @@ final class WebViewModel {
   });
 
   // progress が 0.0 でない場合は true を返す getter を追加
-  bool get isLoading => loadingProgress.progress != 0.0;
+  bool get isLoading => loadingProgress.isLoading;
 
   WebViewModel copyWith({
     WebUri? url,
