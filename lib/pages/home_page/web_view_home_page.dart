@@ -19,9 +19,9 @@ class WebViewHomePage extends ConsumerWidget {
     final pullToRefreshController = PullToRefreshController(
       settings: config.pullToRefreshSettings,
       onRefresh: () async {
-        // computed provider を利用して、非nullなWebViewStateを直接取得（初期化前は例外）
-        final stateData = ref.read(webViewStateProvider);
-        stateData.webViewController.reload();
+        await ref.read(webViewProvider.notifier).refreshMeta();
+        ref.read(webViewProvider.notifier).resetProgress();
+        await ref.read(webViewProvider.notifier).reload();
       },
     );
 
@@ -30,19 +30,21 @@ class WebViewHomePage extends ConsumerWidget {
       initialUrlRequest: URLRequest(url: config.initialUrl),
       initialSettings: config.settings,
       pullToRefreshController: pullToRefreshController,
-      onWebViewCreated: (controller) {
-        // providerの非同期初期化（状態がloadingの場合のみ更新）
-        webViewNotifier.onWebViewCreated(
-          controller,
-          pullToRefreshController: pullToRefreshController,
-        );
+
+      // 状態を初期化
+      onWebViewCreated: (controller) => ref
+          .read(webViewProvider.notifier)
+          .onWebViewCreated(controller, pullToRefreshController: pullToRefreshController),
+
+      onLoadStart: (_, __) => ref.read(webViewProvider.notifier).update(loadingProgress: const LoadingProgress(0.1)),
+
+      onLoadStop: (_, __) async {
+        await ref.read(webViewProvider.notifier).refreshMeta();
+        ref.read(webViewProvider.notifier).resetProgress();
       },
-      onLoadStop: (controller, url) {
-        pullToRefreshController.endRefreshing();
-        if (url != null) {
-          webViewNotifier.update(url: WebUri(url.toString()));
-        }
-      },
+
+      onTitleChanged: (_, __) => ref.read(webViewProvider.notifier).refreshMeta(),
+
       onReceivedError: (controller, request, error) {
         debugPrint('🛑 WebViewError');
         debugPrint('  ▶️ URL: ${request.url}');
@@ -71,18 +73,17 @@ class WebViewHomePage extends ConsumerWidget {
           loadingProgress: LoadingProgress(0.0),
         );
       },
-      onProgressChanged: (controller, progressPercent) {
-        final normalizedProgress = progressPercent / 100.0;
-        webViewNotifier.update(
-          loadingProgress: LoadingProgress(normalizedProgress),
-        );
 
-        if (progressPercent == 100) {
+      onProgressChanged: (_, progress) {
+        ref.read(webViewProvider.notifier).update(loadingProgress: LoadingProgress(progress / 100));
+        if (progress == 100) {
           pullToRefreshController.endRefreshing();
           // 描画前に値がリセットされ、連動してAppBarのプログレスもリセットされる
           webViewNotifier.resetProgress();
         }
       },
+
+      // iOSのSSL関係で必要らしい
       shouldOverrideUrlLoading: (controller, action) async {
         return NavigationActionPolicy.ALLOW;
       },

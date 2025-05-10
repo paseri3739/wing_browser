@@ -15,30 +15,36 @@ final class LoadingProgress {
 
 // WebViewの状態クラス
 final class WebViewModel {
+  final WebUri? url;
   final WebViewTabTitle currentTabTitle;
+  final String? faviconUrl;
   final LoadingProgress loadingProgress;
   final InAppWebViewController webViewController;
   final PullToRefreshController pullToRefreshController;
 
-  WebViewModel({
+  const WebViewModel({
+    required this.url,
     required this.currentTabTitle,
+    required this.faviconUrl,
     required this.loadingProgress,
     required this.webViewController,
     required this.pullToRefreshController,
   });
 
-  // progress が 0.0 でない場合は true を返す getter を追加
   bool get isLoading => loadingProgress.isLoading;
 
   WebViewModel copyWith({
     WebUri? url,
-    WebViewTabTitle? title,
+    WebViewTabTitle? currentTabTitle,
+    String? faviconUrl,
     LoadingProgress? loadingProgress,
     InAppWebViewController? webViewController,
     PullToRefreshController? pullToRefreshController,
   }) {
     return WebViewModel(
-      currentTabTitle: title ?? currentTabTitle,
+      url: url ?? this.url,
+      currentTabTitle: currentTabTitle ?? this.currentTabTitle,
+      faviconUrl: faviconUrl ?? this.faviconUrl,
       loadingProgress: loadingProgress ?? this.loadingProgress,
       webViewController: webViewController ?? this.webViewController,
       pullToRefreshController: pullToRefreshController ?? this.pullToRefreshController,
@@ -50,47 +56,72 @@ final class WebViewModel {
 final class WebViewNotifier extends StateNotifier<AsyncValue<WebViewModel>> {
   WebViewNotifier() : super(const AsyncValue.loading());
 
-  // InAppWebViewのonWebViewCreatedで呼び出す（pullToRefreshControllerも受け取る）
+  // InAppWebView.onWebViewCreated で呼び出す
   void onWebViewCreated(
     InAppWebViewController controller, {
     required PullToRefreshController pullToRefreshController,
   }) {
-    // 初期値（必要に応じて調整）
-    const initialTitle = WebViewTabTitle("Google");
-
-    final newState = WebViewModel(
-      currentTabTitle: initialTitle,
-      loadingProgress: LoadingProgress(0.0),
-      webViewController: controller,
-      pullToRefreshController: pullToRefreshController,
+    state = AsyncValue.data(
+      WebViewModel(
+        url: null,
+        currentTabTitle: const WebViewTabTitle(''),
+        faviconUrl: null,
+        loadingProgress: const LoadingProgress(0.0),
+        webViewController: controller,
+        pullToRefreshController: pullToRefreshController,
+      ),
     );
-
-    state = AsyncValue.data(newState);
   }
 
-  // 複数の状態更新を1つのメソッドで行う
+  // 汎用 update
   void update({
     WebUri? url,
     WebViewTabTitle? title,
+    String? faviconUrl,
     LoadingProgress? loadingProgress,
-    InAppWebViewController? webViewController,
-    PullToRefreshController? pullToRefreshController,
   }) {
-    state.whenData((data) {
-      state = AsyncValue.data(data.copyWith(
-        url: url,
-        title: title,
-        loadingProgress: loadingProgress,
-        webViewController: webViewController,
-        pullToRefreshController: pullToRefreshController,
-      ));
+    state.whenData((m) {
+      state = AsyncValue.data(
+        m.copyWith(
+          url: url,
+          currentTabTitle: title,
+          faviconUrl: faviconUrl,
+          loadingProgress: loadingProgress,
+        ),
+      );
     });
   }
 
-  // 進捗状態のリセット
-  void resetProgress() {
-    update(loadingProgress: LoadingProgress(0.0));
+  // タイトル・ファビコン・URL を一括再取得
+  Future<void> refreshMeta() async {
+    final model = _require();
+    final results = await Future.wait([
+      model.webViewController.getTitle(),
+      model.webViewController.getFavicons(),
+      model.webViewController.getUrl(),
+    ]);
+
+    final title = (results[0] as String?) ?? 'No Title';
+    final favicons = results[1] as List<Favicon>? ?? const [];
+    final faviconUrl = favicons.isNotEmpty ? favicons.first.url.toString() : null;
+    final uri = results[2] as WebUri?;
+
+    update(
+      url: uri,
+      title: WebViewTabTitle(title),
+      faviconUrl: faviconUrl,
+    );
   }
+
+  Future<void> reload() async {
+    final model = _require();
+    await model.webViewController.reload();
+  }
+
+  // 進捗リセット
+  void resetProgress() => update(loadingProgress: const LoadingProgress(0.0));
+
+  WebViewModel _require() => state.value ?? (throw StateError('WebView not ready'));
 }
 
 /// 非同期状態を提供するためのProvider
